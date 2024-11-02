@@ -21,6 +21,7 @@ type University = {
   domain: string;
   notificationEarly: string;
   notificationRegular: string;
+  fileExists: boolean;
 };
 
 function CountdownNumber({ value }: { value: number }) {
@@ -76,6 +77,7 @@ export function UsaUniversityCountdown() {
     notificationRegular: "",
   });
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   const universities = [
     {
@@ -83,90 +85,105 @@ export function UsaUniversityCountdown() {
       domain: "harvard.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Stanford University",
       domain: "stanford.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Massachusetts Institute of Technology",
       domain: "mit.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "14-03-25", // Mid-March 2025
+      fileExists: true,
     },
     {
       name: "California Institute of Technology",
       domain: "caltech.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "15-03-25", // Mid-March 2025
+      fileExists: true,
     },
     {
       name: "Columbia University",
       domain: "columbia.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Princeton University",
       domain: "princeton.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Yale University",
       domain: "yale.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Cornell University",
       domain: "cornell.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
+      fileExists: true,
     },
     {
       name: "University of Pennsylvania",
       domain: "upenn.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Johns Hopkins University",
       domain: "jhu.edu",
       notificationEarly: "13-12-24", // December 13, 2024
       notificationRegular: "15-03-25", // Mid-March 2025
+      fileExists: true,
     },
     {
       name: "New York University",
       domain: "nyu.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
+      fileExists: true,
     },
     {
       name: "Northwestern University",
       domain: "northwestern.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
+      fileExists: true,
     },
     {
       name: "Duke University",
       domain: "duke.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
+      fileExists: true,
     },
     {
       name: "Dartmouth College",
       domain: "dartmouth.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
     {
       name: "Brown University",
       domain: "brown.edu",
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      fileExists: true,
     },
   ];
 
@@ -175,14 +192,12 @@ export function UsaUniversityCountdown() {
   );
 
   useEffect(() => {
-    const storedUniversity = localStorage.getItem("selectedUniversity");
-    if (storedUniversity) {
-      setSelectedUniversity(storedUniversity);
-      setShowCountdown(true);
-    }
+    setMounted(true);
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+
     if (showCountdown && selectedUniversityData) {
       const timer = setInterval(() => {
         const now = new Date();
@@ -224,7 +239,7 @@ export function UsaUniversityCountdown() {
 
       return () => clearInterval(timer);
     }
-  }, [showCountdown, selectedUniversityData]);
+  }, [showCountdown, selectedUniversityData, mounted]);
 
   useEffect(() => {
     const stored = localStorage.getItem("customUniversities");
@@ -267,6 +282,7 @@ export function UsaUniversityCountdown() {
       {
         ...newUniversity,
         domain: cleanDomain(newUniversity.domain),
+        fileExists: false,
       },
     ];
 
@@ -283,6 +299,29 @@ export function UsaUniversityCountdown() {
   };
 
   const allUniversities = [...universities, ...customUniversities];
+
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>,
+    domain: string,
+    universityName: string
+  ) => {
+    const target = e.target as HTMLImageElement;
+
+    // Try Clearbit as first fallback
+    target.src = `https://logo.clearbit.com/${domain}`;
+
+    // If Clearbit fails, use UI Avatars as final fallback
+    target.onerror = () => {
+      target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+        universityName
+      )}&background=random`;
+      target.onerror = null; // Prevent infinite loop
+    };
+  };
+
+  if (!mounted) {
+    return null; // or a loading state
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
@@ -308,17 +347,15 @@ export function UsaUniversityCountdown() {
                   )}
                 >
                   <Image
-                    src={`https://logo.clearbit.com/${university.domain}`}
+                    src={
+                      university.fileExists
+                        ? `/logos/${university.domain}.jpg`
+                        : `https://logo.clearbit.com/${university.domain}`
+                    }
                     alt={`${university.name} logo`}
                     width={24}
                     height={24}
                     className="rounded-full"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                        university.name
-                      )}&background=random`;
-                    }}
                   />
                   <span className="text-sm truncate">{university.name}</span>
                 </button>
@@ -412,17 +449,18 @@ export function UsaUniversityCountdown() {
             {selectedUniversityData && (
               <div className="flex items-center justify-center mb-6 space-x-4">
                 <Image
-                  src={`https://logo.clearbit.com/${selectedUniversityData.domain}`}
+                  src={`/logos/${selectedUniversityData.domain}.jpg`}
                   alt={`${selectedUniversityData.name} logo`}
                   width={64}
                   height={64}
                   className="rounded-full"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                  onError={(e) =>
+                    handleImageError(
+                      e,
+                      selectedUniversityData.domain,
                       selectedUniversityData.name
-                    )}&background=random`;
-                  }}
+                    )
+                  }
                 />
                 <h1 className="text-2xl font-bold text-center">
                   {selectedUniversityData.name}

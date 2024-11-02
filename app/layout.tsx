@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   authors: [{ name: "USA University Countdown" }],
   creator: "USA University Countdown",
   publisher: "USA University Countdown",
+  manifest: "/manifest.json",
+  themeColor: "#000000",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   openGraph: {
     type: "website",
     locale: "en_US",
