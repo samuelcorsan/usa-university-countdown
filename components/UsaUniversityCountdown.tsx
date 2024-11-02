@@ -27,7 +27,7 @@ function CountdownNumber({ value }: { value: number }) {
   const displayValue = value.toString().padStart(2, "0");
 
   return (
-    <div className="flex space-x-[1px]">
+    <div className="flex justify-center space-x-[1px]">
       {displayValue.split("").map((digit, index) => (
         <div key={index} className="relative h-[36px] w-[28px] overflow-hidden">
           <div
@@ -430,11 +430,10 @@ export function UsaUniversityCountdown() {
               </div>
             )}
             <h2 className="text-xl font-semibold mb-4 text-center">
-              Early Decision/Action Countdown to{" "}
-              {selectedUniversityData?.notificationEarly.split("-").join("/")}
+              Early Decision/Action Countdown
             </h2>
             <div className="grid grid-cols-4 gap-2 text-center mb-6">
-              <div className="bg-accent p-2 rounded">
+              <div className="bg-accent p-2 rounded ">
                 <CountdownNumber value={timeLeft.days} />
                 <div className="text-sm">Days</div>
               </div>
@@ -452,8 +451,7 @@ export function UsaUniversityCountdown() {
               </div>
             </div>
             <h2 className="text-xl font-semibold mb-4 mt-8 text-center">
-              Regular Decision Countdown -{" "}
-              {selectedUniversityData?.notificationRegular.split("-").join("/")}
+              Regular Decision Countdown
             </h2>
             <div className="grid grid-cols-4 gap-2 text-center mb-6">
               <div className="bg-accent p-2 rounded">
