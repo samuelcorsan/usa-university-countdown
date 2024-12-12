@@ -214,6 +214,15 @@ export function UsaUniversityCountdown({
       fileExists: true,
       notConfirmedDate: true,
     },
+    {
+      name: "Pomona College",
+      domain: "pomona.edu",
+      notificationEarly: "13-12-24", // Mid-December 2024
+      notificationRegular: "28-03-25", // Late March 2025
+      time: "20:00",
+      fileExists: true,
+      notConfirmedDate: false,
+    },
   ] as University[];
 
   const selectedUniversityData = universities.find(
