@@ -197,7 +197,7 @@ export function UsaUniversityCountdown({
     {
       name: "Dartmouth College",
       domain: "dartmouth.edu",
-      notificationEarly: "18-12-24", // Mid-December 2024
+      notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
       notConfirmedDate: true,
