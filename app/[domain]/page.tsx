@@ -1,13 +1,13 @@
 import { UsaUniversityCountdown } from "@/components/UsaUniversityCountdown";
 import { notFound } from "next/navigation";
 
-type Props = {
-  params: {
+interface Props {
+  params: Promise<{
     domain: string;
-  };
-};
+  }>;
+}
 
-export default async function UniversityPage({ params }: Props) {
+export default async function Page({ params }: Props) {
   const { domain } = await params;
 
   if (!domain) {
