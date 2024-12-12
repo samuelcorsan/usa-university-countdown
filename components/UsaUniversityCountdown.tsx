@@ -139,7 +139,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Yale University",
