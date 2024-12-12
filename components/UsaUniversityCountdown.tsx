@@ -16,6 +16,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Badge } from "./ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type University = {
   name: string;
@@ -23,6 +30,7 @@ type University = {
   notificationEarly: string;
   notificationRegular: string;
   fileExists: boolean;
+  notConfirmedDate?: boolean;
 };
 
 function CountdownNumber({ value }: { value: number }) {
@@ -106,6 +114,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "14-12-24", // Mid-December 2024
       notificationRegular: "14-03-25", // Mid-March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "California Institute of Technology",
@@ -363,209 +372,234 @@ export function UsaUniversityCountdown({
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
-      <div className="bg-card p-8 rounded-lg shadow-md w-[90%] md:w-full max-w-4xl border border-border">
-        {!showCountdown ? (
-          <>
-            <h1 className="text-2xl font-bold mb-6 text-center">
-              Select Your University
-            </h1>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
-              {allUniversities.map((university) => (
-                <button
-                  key={university.name}
-                  onClick={() => {
-                    handleSelectUniversity(university.name);
-                  }}
-                  className={cn(
-                    "flex items-center space-x-2 p-2 rounded-lg border transition-colors",
-                    "hover:bg-accent",
-                    selectedUniversity === university.name
-                      ? "border-primary bg-primary/10"
-                      : "border-border"
-                  )}
-                >
-                  <Image
-                    src={
-                      university.fileExists
-                        ? `/logos/${university.domain}.jpg`
-                        : `https://logo.clearbit.com/${university.domain}`
-                    }
-                    alt={`${university.name} logo`}
-                    width={24}
-                    height={24}
-                    className="rounded-full"
-                  />
-                  <span className="text-sm truncate">{university.name}</span>
-                </button>
-              ))}
+    <TooltipProvider>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
+        <div className="bg-card p-8 rounded-lg shadow-md w-[90%] md:w-full max-w-4xl border border-border">
+          {!showCountdown ? (
+            <>
+              <h1 className="text-2xl font-bold mb-6 text-center">
+                Select Your University
+              </h1>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
+                {allUniversities.map((university) => (
+                  <button
+                    key={university.name}
+                    onClick={() => {
+                      handleSelectUniversity(university.name);
+                    }}
+                    className={cn(
+                      "flex items-center space-x-2 p-2 rounded-lg border transition-colors",
+                      "hover:bg-accent",
+                      selectedUniversity === university.name
+                        ? "border-primary bg-primary/10"
+                        : "border-border"
+                    )}
+                  >
+                    <Image
+                      src={
+                        university.fileExists
+                          ? `/logos/${university.domain}.jpg`
+                          : `https://logo.clearbit.com/${university.domain}`
+                      }
+                      alt={`${university.name} logo`}
+                      width={24}
+                      height={24}
+                      className="rounded-full"
+                    />
+                    <span className="text-sm truncate">{university.name}</span>
+                  </button>
+                ))}
 
-              <Dialog>
-                <DialogTrigger asChild>
-                  {/**  <button className="flex items-center justify-center space-x-2 p-2 rounded-lg border border-dashed border-border hover:border-foreground hover:bg-accent transition-colors">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    {/**  <button className="flex items-center justify-center space-x-2 p-2 rounded-lg border border-dashed border-border hover:border-foreground hover:bg-accent transition-colors">
                     <span className="text-sm">+ Add University</span>
                   </button>
                   */}
-                </DialogTrigger>
+                  </DialogTrigger>
 
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add New University</DialogTitle>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid gap-2">
-                      <Label htmlFor="name">University Name</Label>
-                      <Input
-                        id="name"
-                        value={newUniversity.name}
-                        onChange={(e) =>
-                          setNewUniversity({
-                            ...newUniversity,
-                            name: e.target.value,
-                          })
-                        }
-                      />
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Add New University</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid gap-2">
+                        <Label htmlFor="name">University Name</Label>
+                        <Input
+                          id="name"
+                          value={newUniversity.name}
+                          onChange={(e) =>
+                            setNewUniversity({
+                              ...newUniversity,
+                              name: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label htmlFor="domain">
+                          Domain (e.g., harvard.edu)
+                        </Label>
+                        <Input
+                          id="domain"
+                          value={newUniversity.domain}
+                          onChange={(e) =>
+                            setNewUniversity({
+                              ...newUniversity,
+                              domain: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label>Early Decision Date (DD-MM-YY)</Label>
+                        <Input
+                          placeholder="15-12-24"
+                          value={newUniversity.notificationEarly}
+                          onChange={(e) =>
+                            setNewUniversity({
+                              ...newUniversity,
+                              notificationEarly: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label>Regular Decision Date (DD-MM-YY)</Label>
+                        <Input
+                          placeholder="28-03-25"
+                          value={newUniversity.notificationRegular}
+                          onChange={(e) =>
+                            setNewUniversity({
+                              ...newUniversity,
+                              notificationRegular: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
                     </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="domain">Domain (e.g., harvard.edu)</Label>
-                      <Input
-                        id="domain"
-                        value={newUniversity.domain}
-                        onChange={(e) =>
-                          setNewUniversity({
-                            ...newUniversity,
-                            domain: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label>Early Decision Date (DD-MM-YY)</Label>
-                      <Input
-                        placeholder="15-12-24"
-                        value={newUniversity.notificationEarly}
-                        onChange={(e) =>
-                          setNewUniversity({
-                            ...newUniversity,
-                            notificationEarly: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label>Regular Decision Date (DD-MM-YY)</Label>
-                      <Input
-                        placeholder="28-03-25"
-                        value={newUniversity.notificationRegular}
-                        onChange={(e) =>
-                          setNewUniversity({
-                            ...newUniversity,
-                            notificationRegular: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
-                  <DialogClose ref={dialogCloseRef} className="hidden" />
-                  <Button
-                    onClick={handleAddUniversity}
-                    disabled={
-                      !newUniversity.name ||
-                      !newUniversity.domain ||
-                      !newUniversity.notificationEarly ||
-                      !newUniversity.notificationRegular
+                    <DialogClose ref={dialogCloseRef} className="hidden" />
+                    <Button
+                      onClick={handleAddUniversity}
+                      disabled={
+                        !newUniversity.name ||
+                        !newUniversity.domain ||
+                        !newUniversity.notificationEarly ||
+                        !newUniversity.notificationRegular
+                      }
+                    >
+                      Add University
+                    </Button>
+                  </DialogContent>
+                </Dialog>
+              </div>
+              <Button onClick={handleNext} className="w-full">
+                Next
+              </Button>
+            </>
+          ) : (
+            <>
+              {selectedUniversityData && (
+                <div className="flex items-center justify-center mb-6 space-x-4">
+                  <Image
+                    src={`/logos/${selectedUniversityData.domain}.jpg`}
+                    alt={`${selectedUniversityData.name} logo`}
+                    width={64}
+                    height={64}
+                    className="rounded-full"
+                    onError={(e) =>
+                      handleImageError(
+                        e,
+                        selectedUniversityData.domain,
+                        selectedUniversityData.name
+                      )
                     }
-                  >
-                    Add University
-                  </Button>
-                </DialogContent>
-              </Dialog>
-            </div>
-            <Button onClick={handleNext} className="w-full">
-              Next
-            </Button>
-          </>
-        ) : (
-          <>
-            {selectedUniversityData && (
-              <div className="flex items-center justify-center mb-6 space-x-4">
-                <Image
-                  src={`/logos/${selectedUniversityData.domain}.jpg`}
-                  alt={`${selectedUniversityData.name} logo`}
-                  width={64}
-                  height={64}
-                  className="rounded-full"
-                  onError={(e) =>
-                    handleImageError(
-                      e,
-                      selectedUniversityData.domain,
-                      selectedUniversityData.name
-                    )
-                  }
-                />
-                <h1 className="text-2xl font-bold text-center">
-                  {selectedUniversityData.name}
-                </h1>
+                  />
+                  <div>
+                    <h1 className="text-2xl font-bold text-center">
+                      {selectedUniversityData.name}
+                    </h1>
+                    <Tooltip>
+                      {selectedUniversityData.notConfirmedDate && (
+                        <TooltipTrigger>
+                          <Badge
+                            className="rounded-full text-sm mt-1"
+                            variant="destructive"
+                          >
+                            ⚠️ Dates have not been confirmed
+                          </Badge>
+                        </TooltipTrigger>
+                      )}
+                      <TooltipContent>
+                        <p>
+                          I have not confirmed the dates for this university
+                          yet. If you know the dates, please let me know so I
+                          can add them.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                </div>
+              )}
+              <h2 className="text-xl font-semibold mb-4 text-center">
+                Early Decision/Action Countdown
+              </h2>
+              <div className="grid grid-cols-4 gap-2 text-center mb-6">
+                <div className="bg-accent p-2 rounded ">
+                  <CountdownNumber value={timeLeft.days} />
+                  <div className="text-sm">Days</div>
+                </div>
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeft.hours} />
+                  <div className="text-sm">Hours</div>
+                </div>
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeft.minutes} />
+                  <div className="text-sm">Minutes</div>
+                </div>
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeft.seconds} />
+                  <div className="text-sm">Seconds</div>
+                </div>
               </div>
-            )}
-            <h2 className="text-xl font-semibold mb-4 text-center">
-              Early Decision/Action Countdown
-            </h2>
-            <div className="grid grid-cols-4 gap-2 text-center mb-6">
-              <div className="bg-accent p-2 rounded ">
-                <CountdownNumber value={timeLeft.days} />
-                <div className="text-sm">Days</div>
+              <h2 className="text-xl font-semibold mb-4 mt-8 text-center">
+                Regular Decision Countdown
+              </h2>
+              <div className="grid grid-cols-4 gap-2 text-center mb-6">
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeftRegular.days} />
+                  <div className="text-sm">Days</div>
+                </div>
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeftRegular.hours} />
+                  <div className="text-sm">Hours</div>
+                </div>
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeftRegular.minutes} />
+                  <div className="text-sm">Minutes</div>
+                </div>
+                <div className="bg-accent p-2 rounded">
+                  <CountdownNumber value={timeLeftRegular.seconds} />
+                  <div className="text-sm">Seconds</div>
+                </div>
               </div>
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeft.hours} />
-                <div className="text-sm">Hours</div>
-              </div>
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeft.minutes} />
-                <div className="text-sm">Minutes</div>
-              </div>
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeft.seconds} />
-                <div className="text-sm">Seconds</div>
-              </div>
-            </div>
-            <h2 className="text-xl font-semibold mb-4 mt-8 text-center">
-              Regular Decision Countdown
-            </h2>
-            <div className="grid grid-cols-4 gap-2 text-center mb-6">
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeftRegular.days} />
-                <div className="text-sm">Days</div>
-              </div>
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeftRegular.hours} />
-                <div className="text-sm">Hours</div>
-              </div>
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeftRegular.minutes} />
-                <div className="text-sm">Minutes</div>
-              </div>
-              <div className="bg-accent p-2 rounded">
-                <CountdownNumber value={timeLeftRegular.seconds} />
-                <div className="text-sm">Seconds</div>
-              </div>
-            </div>
-            <Button onClick={handleBack} className="w-full">
-              Back to Selection
-            </Button>
-          </>
-        )}
+              <Button onClick={handleBack} className="w-full">
+                Back to Selection
+              </Button>
+            </>
+          )}
+        </div>
+        <footer className="mt-8 mb-4 text-sm text-muted-foreground">
+          Made with ❤️ by{" "}
+          <Link
+            href="https://linkedin.com/in/leonardo-ollero"
+            target="_blank"
+            className="font-medium text-primary hover:underline"
+          >
+            Leo
+          </Link>
+        </footer>
       </div>
-      <footer className="mt-8 mb-4 text-sm text-muted-foreground">
-        Made with ❤️ by{" "}
-        <Link
-          href="https://linkedin.com/in/leonardo-ollero"
-          target="_blank"
-          className="font-medium text-primary hover:underline"
-        >
-          Leo
-        </Link>
-      </footer>
-    </div>
+    </TooltipProvider>
   );
 }
