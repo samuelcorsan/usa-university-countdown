@@ -167,7 +167,7 @@ export function UsaUniversityCountdown() {
     {
       name: "Duke University",
       domain: "duke.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "16-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
     },
