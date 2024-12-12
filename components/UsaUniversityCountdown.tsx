@@ -31,6 +31,7 @@ type University = {
   notificationRegular: string;
   fileExists: boolean;
   notConfirmedDate?: boolean;
+  time?: string;
 };
 
 function CountdownNumber({ value }: { value: number }) {
@@ -199,8 +200,9 @@ export function UsaUniversityCountdown({
       domain: "dartmouth.edu",
       notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      time: "15:00",
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Brown University",
@@ -210,7 +212,7 @@ export function UsaUniversityCountdown({
       fileExists: true,
       notConfirmedDate: true,
     },
-  ];
+  ] as University[];
 
   const selectedUniversityData = universities.find(
     (uni) => uni.name === selectedUniversity
@@ -226,12 +228,15 @@ export function UsaUniversityCountdown({
     if (showCountdown && selectedUniversityData) {
       const timer = setInterval(() => {
         const now = new Date();
+        const defaultTime = "19:00:00"; // 7 PM default
 
         // Early notification countdown
         const [dayEarly, monthEarly, yearEarly] =
           selectedUniversityData.notificationEarly.split("-");
         const targetDateEarly = new Date(
-          `20${yearEarly}-${monthEarly}-${dayEarly}T19:00:00-04:00`
+          `20${yearEarly}-${monthEarly}-${dayEarly}T${
+            selectedUniversityData.time || defaultTime
+          }-05:00`
         );
         const differenceEarly = targetDateEarly.getTime() - now.getTime();
 
@@ -239,7 +244,9 @@ export function UsaUniversityCountdown({
         const [dayRegular, monthRegular, yearRegular] =
           selectedUniversityData.notificationRegular.split("-");
         const targetDateRegular = new Date(
-          `20${yearRegular}-${monthRegular}-${dayRegular}T19:00:00-04:00`
+          `20${yearRegular}-${monthRegular}-${dayRegular}T${
+            selectedUniversityData.time || defaultTime
+          }-05:00`
         );
         const differenceRegular = targetDateRegular.getTime() - now.getTime();
 
