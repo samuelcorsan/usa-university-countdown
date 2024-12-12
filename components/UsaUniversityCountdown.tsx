@@ -174,10 +174,10 @@ export function UsaUniversityCountdown({
     {
       name: "New York University",
       domain: "nyu.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Northwestern University",
