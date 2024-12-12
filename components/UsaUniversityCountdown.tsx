@@ -107,6 +107,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Massachusetts Institute of Technology",
@@ -122,6 +123,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "15-03-25", // Mid-March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Columbia University",
@@ -136,6 +138,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Yale University",
@@ -143,6 +146,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "17-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Cornell University",
@@ -150,6 +154,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "University of Pennsylvania",
@@ -164,6 +169,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // December 13, 2024
       notificationRegular: "15-03-25", // Mid-March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "New York University",
@@ -171,6 +177,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "15-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Northwestern University",
@@ -178,6 +185,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Duke University",
@@ -192,6 +200,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "18-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
     {
       name: "Brown University",
@@ -199,6 +208,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
+      notConfirmedDate: true,
     },
   ];
 
