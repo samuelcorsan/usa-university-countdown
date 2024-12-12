@@ -114,6 +114,7 @@ export function UsaUniversityCountdown({
       name: "Massachusetts Institute of Technology",
       domain: "mit.edu",
       notificationEarly: "17-12-24", // Mid-December 2024
+      time: "18:28",
       notificationRegular: "14-03-25", // Mid-March 2025
       fileExists: true,
       notConfirmedDate: false,
