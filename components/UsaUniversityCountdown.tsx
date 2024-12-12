@@ -147,8 +147,9 @@ export function UsaUniversityCountdown({
       domain: "yale.edu",
       notificationEarly: "17-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
+      time: "17:00",
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Cornell University",
