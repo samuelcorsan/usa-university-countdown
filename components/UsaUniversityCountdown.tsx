@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type University = {
   name: string;
@@ -52,7 +53,12 @@ function CountdownNumber({ value }: { value: number }) {
   );
 }
 
-export function UsaUniversityCountdown() {
+export function UsaUniversityCountdown({
+  initialDomain,
+}: {
+  initialDomain?: string;
+}) {
+  const router = useRouter();
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [showCountdown, setShowCountdown] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
@@ -248,8 +254,38 @@ export function UsaUniversityCountdown() {
     }
   }, []);
 
+  useEffect(() => {
+    if (initialDomain && mounted) {
+      const cleanInitialDomain = initialDomain
+        .replace(/^https?:\/\//, "")
+        .replace(/^www\./, "")
+        .replace(/\/+$/, "");
+
+      const university = [...universities, ...customUniversities].find(
+        (uni) => uni.domain.toLowerCase() === cleanInitialDomain.toLowerCase()
+      );
+
+      if (university) {
+        setSelectedUniversity(university.name);
+        setShowCountdown(true);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [initialDomain, mounted, customUniversities]);
+
   const handleSelectUniversity = (value: string) => {
     setSelectedUniversity(value);
+    const university = [...universities, ...customUniversities].find(
+      (uni) => uni.name === value
+    );
+    if (university && !initialDomain) {
+      const cleanDomain = university.domain
+        .replace(/^https?:\/\//, "")
+        .replace(/^www\./, "")
+        .replace(/\/+$/, "");
+      router.push(`/${cleanDomain}`);
+    }
   };
 
   const handleNext = () => {
@@ -263,6 +299,9 @@ export function UsaUniversityCountdown() {
     setShowCountdown(false);
     setSelectedUniversity("");
     localStorage.removeItem("selectedUniversity");
+    if (initialDomain) {
+      router.push("/");
+    }
   };
 
   const handleAddUniversity = () => {
@@ -363,10 +402,12 @@ export function UsaUniversityCountdown() {
 
               <Dialog>
                 <DialogTrigger asChild>
-                  <button className="flex items-center justify-center space-x-2 p-2 rounded-lg border border-dashed border-border hover:border-foreground hover:bg-accent transition-colors">
+                  {/**  <button className="flex items-center justify-center space-x-2 p-2 rounded-lg border border-dashed border-border hover:border-foreground hover:bg-accent transition-colors">
                     <span className="text-sm">+ Add University</span>
                   </button>
+                  */}
                 </DialogTrigger>
+
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Add New University</DialogTitle>

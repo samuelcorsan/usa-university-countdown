@@ -14,6 +14,12 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "USA University Countdown",
   description: "Countdown to the start of the USA university application",
@@ -24,7 +30,6 @@ export const metadata: Metadata = {
   publisher: "USA University Countdown",
   manifest: "/manifest.json",
   themeColor: "#000000",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   openGraph: {
     type: "website",
     locale: "en_US",

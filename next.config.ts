@@ -20,8 +20,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPWA({
+const pwaConfig = withPWA({
   dest: "public",
   register: true,
   skipWaiting: true,
+  dynamicStartUrl: true,
+  dynamicStartUrlRedirect: "/",
 })(nextConfig);
+
+export default pwaConfig;
