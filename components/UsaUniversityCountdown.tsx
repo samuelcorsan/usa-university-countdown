@@ -182,10 +182,10 @@ export function UsaUniversityCountdown({
     {
       name: "Northwestern University",
       domain: "northwestern.edu",
-      notificationEarly: "13-12-24", // Mid-December 2024
+      notificationEarly: "17-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Duke University",
