@@ -83,7 +83,7 @@ export function UsaUniversityCountdown() {
     {
       name: "Harvard University",
       domain: "harvard.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
     },
@@ -111,7 +111,7 @@ export function UsaUniversityCountdown() {
     {
       name: "Columbia University",
       domain: "columbia.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "18-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
     },
@@ -139,7 +139,7 @@ export function UsaUniversityCountdown() {
     {
       name: "University of Pennsylvania",
       domain: "upenn.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "19-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
     },
@@ -206,7 +206,7 @@ export function UsaUniversityCountdown() {
         const [dayEarly, monthEarly, yearEarly] =
           selectedUniversityData.notificationEarly.split("-");
         const targetDateEarly = new Date(
-          `20${yearEarly}-${monthEarly}-${dayEarly}T00:00:00`
+          `20${yearEarly}-${monthEarly}-${dayEarly}T19:00:00-04:00`
         );
         const differenceEarly = targetDateEarly.getTime() - now.getTime();
 
@@ -214,7 +214,7 @@ export function UsaUniversityCountdown() {
         const [dayRegular, monthRegular, yearRegular] =
           selectedUniversityData.notificationRegular.split("-");
         const targetDateRegular = new Date(
-          `20${yearRegular}-${monthRegular}-${dayRegular}T00:00:00`
+          `20${yearRegular}-${monthRegular}-${dayRegular}T19:00:00-04:00`
         );
         const differenceRegular = targetDateRegular.getTime() - now.getTime();
 
