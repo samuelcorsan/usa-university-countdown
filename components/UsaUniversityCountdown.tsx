@@ -83,7 +83,7 @@ export function UsaUniversityCountdown() {
     {
       name: "Harvard University",
       domain: "harvard.edu",
-      notificationEarly: "13-12-24", // Mid-December 2024
+      notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
     },
@@ -97,14 +97,14 @@ export function UsaUniversityCountdown() {
     {
       name: "Massachusetts Institute of Technology",
       domain: "mit.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "14-03-25", // Mid-March 2025
       fileExists: true,
     },
     {
       name: "California Institute of Technology",
       domain: "caltech.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "15-03-25", // Mid-March 2025
       fileExists: true,
     },
@@ -132,7 +132,7 @@ export function UsaUniversityCountdown() {
     {
       name: "Cornell University",
       domain: "cornell.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
     },
@@ -181,7 +181,7 @@ export function UsaUniversityCountdown() {
     {
       name: "Brown University",
       domain: "brown.edu",
-      notificationEarly: "15-12-24", // Mid-December 2024
+      notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
     },
