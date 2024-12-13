@@ -108,7 +108,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Massachusetts Institute of Technology",
@@ -125,7 +125,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "15-03-25", // Mid-March 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Columbia University",
@@ -157,7 +157,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "12-12-24", // Mid-December 2024
       notificationRegular: "01-04-25", // Early April 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "University of Pennsylvania",
@@ -172,7 +172,8 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // December 13, 2024
       notificationRegular: "15-03-25", // Mid-March 2025
       fileExists: true,
-      notConfirmedDate: true,
+      time: "15:00",
+      notConfirmedDate: false,
     },
     {
       name: "New York University",
@@ -212,7 +213,7 @@ export function UsaUniversityCountdown({
       notificationEarly: "13-12-24", // Mid-December 2024
       notificationRegular: "28-03-25", // Late March 2025
       fileExists: true,
-      notConfirmedDate: true,
+      notConfirmedDate: false,
     },
     {
       name: "Pomona College",
