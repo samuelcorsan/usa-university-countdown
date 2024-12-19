@@ -103,7 +103,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -113,21 +113,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
-        <ErrorBoundary>
-          <Analytics />
-          <SwRegister />
-          <div className="absolute top-4 right-4 z-50">
-            <ModeToggle />
-          </div>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          storageKey="theme-preference"
+        >
+          <ErrorBoundary>
+            <Analytics />
+            <SwRegister />
+            <div className="absolute top-4 right-4 z-50">
+              <ModeToggle />
+            </div>
             {children}
-          </ThemeProvider>
-        </ErrorBoundary>
+          </ErrorBoundary>
+        </ThemeProvider>
       </body>
     </html>
   );

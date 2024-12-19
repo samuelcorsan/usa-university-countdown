@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import universities from "@/universities";
 import { getDominantColor } from "@/lib/color-utils";
+import type { Viewport } from "next";
 
 interface Props {
-  params: {
+  params: Promise<{
     domain: string;
-  };
+  }>;
 }
 
 export default async function Page(props: Props) {
@@ -31,7 +32,8 @@ export default async function Page(props: Props) {
   return <UsaUniversityCountdown initialDomain={cleanDomain} />;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const domain = await params.domain;
 
   // Clean the domain parameter
@@ -58,13 +60,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `/logos/${university.domain}.jpg`
     : `https://logo.clearbit.com/${university.domain}`;
 
-  // Get dominant color
-  const themeColor = await getDominantColor(logoUrl);
-
   return {
     title: `${university.name} Decision Date Countdown | USA University Countdown`,
     description: `Track ${university.name}'s college application decision dates. Get accurate countdown timers for early decision (${university.notificationEarly}) and regular decision (${university.notificationRegular}) notifications.`,
-    themeColor: themeColor,
     openGraph: {
       title: `${university.name} Decision Date Countdown`,
       description: `Track ${university.name}'s college application decision dates and notifications.`,
@@ -74,5 +72,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${university.name} Decision Date Countdown`,
       description: `Track ${university.name}'s college application decision dates and notifications.`,
     },
+    icons: {
+      icon: logoUrl,
+      shortcut: logoUrl,
+      apple: logoUrl,
+    },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: "#000000", // Default theme color
+};
