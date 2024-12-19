@@ -1,4 +1,4 @@
 interface Window {
-  dataLayer: any[]; // or use a more specific type if known
-  gtag: (command: string, ...args: any[]) => void;
+  dataLayer: unknown[];
+  gtag: (command: string, ...args: unknown[]) => void;
 }

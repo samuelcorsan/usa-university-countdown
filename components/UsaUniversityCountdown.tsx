@@ -63,12 +63,12 @@ export function UsaUniversityCountdown({
   const router = useRouter();
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [showCountdown, setShowCountdown] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
+  /*const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
-  });
+  });*/
   const [timeLeftRegular, setTimeLeftRegular] = useState({
     days: 0,
     hours: 0,
@@ -104,14 +104,15 @@ export function UsaUniversityCountdown({
         const defaultTime = "19:00:00"; // 7 PM default
 
         // Early notification countdown
-        const [dayEarly, monthEarly, yearEarly] =
+        /*const [dayEarly, monthEarly, yearEarly] =
           selectedUniversityData.notificationEarly.split("-");
         const targetDateEarly = new Date(
           `20${yearEarly}-${monthEarly}-${dayEarly}T${
             selectedUniversityData.time || defaultTime
           }-05:00`
         );
-        const differenceEarly = targetDateEarly.getTime() - now.getTime();
+        // const differenceEarly = targetDateEarly.getTime() - now.getTime();
+        */
 
         // Regular notification countdown
         const [dayRegular, monthRegular, yearRegular] =
@@ -123,6 +124,7 @@ export function UsaUniversityCountdown({
         );
         const differenceRegular = targetDateRegular.getTime() - now.getTime();
 
+        /**
         if (differenceEarly > 0) {
           setTimeLeft({
             days: Math.floor(differenceEarly / (1000 * 60 * 60 * 24)),
@@ -131,6 +133,7 @@ export function UsaUniversityCountdown({
             seconds: Math.floor((differenceEarly / 1000) % 60),
           });
         }
+        */
 
         if (differenceRegular > 0) {
           setTimeLeftRegular({
@@ -171,7 +174,7 @@ export function UsaUniversityCountdown({
         router.push("/");
       }
     }
-  }, [initialDomain, mounted, customUniversities]);
+  }, [initialDomain, mounted, customUniversities, router]);
 
   const handleSelectUniversity = (value: string) => {
     setSelectedUniversity(value);
@@ -191,21 +194,6 @@ export function UsaUniversityCountdown({
         });
       } else {
         router.push(`/${cleanDomain}`);
-      }
-    }
-  };
-
-  const handleNext = () => {
-    if (selectedUniversity) {
-      localStorage.setItem("selectedUniversity", selectedUniversity);
-
-      // Use View Transitions API
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          setShowCountdown(true);
-        });
-      } else {
-        setShowCountdown(true);
       }
     }
   };
