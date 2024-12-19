@@ -5,7 +5,7 @@ const SwRegister = () => {
     window.workbox !== undefined
   ) {
     const wb = window.workbox;
-    wb.register().catch((error: any) => {
+    wb.register().catch((error: Error) => {
       console.error("Service worker registration failed:", error);
     });
 

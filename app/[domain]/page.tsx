@@ -2,7 +2,6 @@ import { UsaUniversityCountdown } from "@/components/UsaUniversityCountdown";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import universities from "@/universities";
-import { getDominantColor } from "@/lib/color-utils";
 import type { Viewport } from "next";
 
 interface Props {
