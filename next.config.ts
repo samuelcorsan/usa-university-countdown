@@ -1,6 +1,8 @@
 import withPWA from "next-pwa";
 import type { NextConfig } from "next";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -24,8 +26,14 @@ const pwaConfig = withPWA({
   dest: "public",
   register: true,
   skipWaiting: true,
-  dynamicStartUrl: true,
-  dynamicStartUrlRedirect: "/",
+  disable: isDevelopment,
+  exclude: [
+    // Add exclusions for development files
+    /\.map$/,
+    /asset-manifest\.json$/,
+    /[\\/]dev-sw\.js$/,
+    /[\\/]workbox-(.)*\.js$/,
+  ],
 })(nextConfig);
 
 export default pwaConfig;
