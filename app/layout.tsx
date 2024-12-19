@@ -131,7 +131,7 @@ export default function RootLayout({
           </ErrorBoundary>
         </ThemeProvider>
       </body>
-      <GoogleAnalytics gaId="G-GM5JBE83W" />
+      <GoogleAnalytics gaId="G-GM5JBE83WY" />
     </html>
   );
 }
