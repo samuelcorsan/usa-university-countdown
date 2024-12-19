@@ -6,6 +6,7 @@ import { ModeToggle } from "@/components/theme-toogle";
 import { Analytics } from "@vercel/analytics/react";
 import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -130,6 +131,7 @@ export default function RootLayout({
           </ErrorBoundary>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-GM5JBE83W" />
     </html>
   );
 }

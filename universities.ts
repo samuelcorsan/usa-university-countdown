@@ -2,131 +2,240 @@ const universities = [
   {
     name: "Harvard University",
     domain: "harvard.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
+    notConfirmedDate: true,
   },
   {
     name: "Stanford University",
     domain: "stanford.edu",
-    notificationEarly: "13-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "13-12-24",
+    notificationRegular: "28-03-25",
+    time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Massachusetts Institute of Technology",
     domain: "mit.edu",
-    notificationEarly: "17-12-24", // Mid-December 2024
+    notificationEarly: "17-12-24",
+    notificationRegular: "14-03-25",
     time: "18:28",
-    notificationRegular: "14-03-25", // Mid-March 2025
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "California Institute of Technology",
     domain: "caltech.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "15-03-25", // Mid-March 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "15-03-25",
+    time: "14:22",
     fileExists: true,
     notConfirmedDate: false,
   },
   {
     name: "Columbia University",
     domain: "columbia.edu",
-    notificationEarly: "18-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "18-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
+    notConfirmedDate: true,
   },
   {
     name: "Princeton University",
     domain: "princeton.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Yale University",
     domain: "yale.edu",
-    notificationEarly: "17-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
-    time: "17:00",
+    notificationEarly: "17-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Cornell University",
     domain: "cornell.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "01-04-25", // Early April 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "University of Pennsylvania",
     domain: "upenn.edu",
-    notificationEarly: "19-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "19-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
+    notConfirmedDate: true,
   },
   {
     name: "Johns Hopkins University",
     domain: "jhu.edu",
-    notificationEarly: "13-12-24", // December 13, 2024
-    notificationRegular: "15-03-25", // Mid-March 2025
-    fileExists: true,
+    notificationEarly: "13-12-24",
+    notificationRegular: "09-05-25",
     time: "15:00",
+    fileExists: true,
     notConfirmedDate: false,
   },
   {
     name: "New York University",
     domain: "nyu.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "01-04-25", // Early April 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "01-04-25",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Northwestern University",
     domain: "northwestern.edu",
-    notificationEarly: "17-12-24", // Mid-December 2024
-    notificationRegular: "01-04-25", // Early April 2025
+    notificationEarly: "17-12-24",
+    notificationRegular: "01-04-25",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Duke University",
     domain: "duke.edu",
-    notificationEarly: "16-12-24", // Mid-December 2024
-    notificationRegular: "01-04-25", // Early April 2025
+    notificationEarly: "16-12-24",
+    notificationRegular: "27-03-25",
     fileExists: true,
+    notConfirmedDate: true,
   },
   {
     name: "Dartmouth College",
     domain: "dartmouth.edu",
-    notificationEarly: "13-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
-    time: "15:00",
+    notificationEarly: "13-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Brown University",
     domain: "brown.edu",
-    notificationEarly: "13-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "13-12-24",
+    notificationRegular: "27-03-25",
+    time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Pomona College",
     domain: "pomona.edu",
-    notificationEarly: "13-12-24", // Mid-December 2024
-    notificationRegular: "28-03-25", // Late March 2025
+    notificationEarly: "13-12-24",
+    notificationRegular: "28-03-25",
     time: "20:00",
     fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "Amherst College",
+    domain: "amherst.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "20-03-25",
+    time: "18:21",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of North Carolina at Chapel Hill",
+    domain: "unc.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "21-03-25",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "Williams College",
+    domain: "williams.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "21-03-25",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of California, Berkeley",
+    domain: "berkeley.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "27-03-25",
+    fileExists: true,
     notConfirmedDate: false,
+  },
+  {
+    name: "University of California, Los Angeles",
+    domain: "ucla.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "21-03-25",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of California, San Diego",
+    domain: "ucsd.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "21-03-25",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of California, Irvine",
+    domain: "uci.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "28-03-25",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of California, Santa Barbara",
+    domain: "ucsb.edu",
+    notificationEarly: "12-12-24",
+    notificationRegular: "28-03-25",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of California, Davis",
+    domain: "ucdavis.edu",
+    notificationEarly: "12-12-24", // Mid-December 2024
+    notificationRegular: "28-03-25", // Late March 2025
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "University of California, Santa Cruz",
+    domain: "ucsc.edu",
+    notificationEarly: "12-12-24", // Mid-December 2024
+    notificationRegular: "28-03-25", // Late March 2025
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "Middlebury College",
+    domain: "middlebury.edu",
+    notificationEarly: "12-12-24", // Mid-December 2024
+    notificationRegular: "15-03-25", // Late March 2025
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "Bowdoin College",
+    domain: "bowdoin.edu",
+    notificationEarly: "12-12-24", // Mid-December 2024
+    notificationRegular: "21-03-25", // Late March 2025
+    fileExists: true,
+    notConfirmedDate: true,
   },
 ] as University[];
 type University = {

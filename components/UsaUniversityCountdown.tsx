@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import universities from "@/universities";
 import { University } from "@/universities";
+import { CalendarButtons } from "./CalendarButtons";
 
 function CountdownNumber({ value }: { value: number }) {
   const displayValue = value.toString().padStart(2, "0");
@@ -182,14 +183,30 @@ export function UsaUniversityCountdown({
         .replace(/^https?:\/\//, "")
         .replace(/^www\./, "")
         .replace(/\/+$/, "");
-      router.push(`/${cleanDomain}`);
+
+      // Use View Transitions API
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          router.push(`/${cleanDomain}`);
+        });
+      } else {
+        router.push(`/${cleanDomain}`);
+      }
     }
   };
 
   const handleNext = () => {
     if (selectedUniversity) {
       localStorage.setItem("selectedUniversity", selectedUniversity);
-      setShowCountdown(true);
+
+      // Use View Transitions API
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          setShowCountdown(true);
+        });
+      } else {
+        setShowCountdown(true);
+      }
     }
   };
 
@@ -198,7 +215,14 @@ export function UsaUniversityCountdown({
     setSelectedUniversity("");
     localStorage.removeItem("selectedUniversity");
     if (initialDomain) {
-      router.push("/");
+      // Use View Transitions API
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          router.push("/");
+        });
+      } else {
+        router.push("/");
+      }
     }
   };
 
@@ -382,9 +406,6 @@ export function UsaUniversityCountdown({
                   </DialogContent>
                 </Dialog>
               </div>
-              <Button onClick={handleNext} className="w-full">
-                Next
-              </Button>
             </>
           ) : (
             <>
@@ -404,7 +425,7 @@ export function UsaUniversityCountdown({
                       )
                     }
                   />
-                  <div>
+                  <div className="flex flex-col items-start">
                     <h1 className="text-2xl font-bold text-center">
                       {selectedUniversityData.name}
                     </h1>
@@ -430,6 +451,7 @@ export function UsaUniversityCountdown({
                   </div>
                 </div>
               )}
+              {/**
               <h2 className="text-xl font-semibold mb-4 text-center">
                 Early Decision/Action Countdown
               </h2>
@@ -451,27 +473,37 @@ export function UsaUniversityCountdown({
                   <div className="text-sm">Seconds</div>
                 </div>
               </div>
-              <h2 className="text-xl font-semibold mb-4 mt-8 text-center">
-                Regular Decision Countdown
-              </h2>
-              <div className="grid grid-cols-4 gap-2 text-center mb-6">
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeftRegular.days} />
-                  <div className="text-sm">Days</div>
+              */}
+              <section className="flex flex-col items-center justify-center">
+                <h2 className="text-xl font-semibold mb-4 text-center">
+                  Regular Decision Countdown
+                </h2>
+                <div className="grid grid-cols-4 gap-2 text-center mb-6 w-fit justify-center items-center">
+                  <div className="bg-accent p-2 rounded w-full">
+                    <CountdownNumber value={timeLeftRegular.days} />
+                    <div className="text-sm">Days</div>
+                  </div>
+                  <div className="bg-accent p-2 rounded w-full">
+                    <CountdownNumber value={timeLeftRegular.hours} />
+                    <div className="text-sm">Hours</div>
+                  </div>
+                  <div className="bg-accent p-2 rounded w-full">
+                    <CountdownNumber value={timeLeftRegular.minutes} />
+                    <div className="text-sm">Minutes</div>
+                  </div>
+                  <div className="bg-accent p-2 rounded w-full">
+                    <CountdownNumber value={timeLeftRegular.seconds} />
+                    <div className="text-sm">Seconds</div>
+                  </div>
                 </div>
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeftRegular.hours} />
-                  <div className="text-sm">Hours</div>
-                </div>
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeftRegular.minutes} />
-                  <div className="text-sm">Minutes</div>
-                </div>
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeftRegular.seconds} />
-                  <div className="text-sm">Seconds</div>
-                </div>
-              </div>
+              </section>
+
+              <CalendarButtons
+                title={`${selectedUniversityData?.name} Regular`}
+                date={selectedUniversityData?.notificationRegular || ""}
+                time={selectedUniversityData?.time || ""}
+                className="w-full mb-6"
+              />
               <Button onClick={handleBack} className="w-full">
                 Back to Selection
               </Button>
