@@ -51,8 +51,26 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     return {
       title: "University Not Found | USA University Countdown",
       description: "The requested university countdown was not found.",
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   }
+
+  // Generate university-specific keywords
+  const keywords = [
+    university.name,
+    `${university.name} decision date`,
+    `${university.name} admissions`,
+    `${university.name} early decision`,
+    `${university.name} regular decision`,
+    `${university.name} countdown`,
+    `${university.name} application results`,
+    "college decisions",
+    "university countdown",
+    "admission dates",
+  ].join(", ");
 
   // Get logo URL
   const logoUrl = university.fileExists
@@ -62,12 +80,16 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
     title: `${university.name} Decision Date Countdown | USA University Countdown`,
     description: `Track ${university.name}'s college application decision dates. Get accurate countdown timers for early decision (${university.notificationEarly}) and regular decision (${university.notificationRegular}) notifications.`,
+    keywords,
     openGraph: {
       title: `${university.name} Decision Date Countdown`,
       description: `Track ${university.name}'s college application decision dates and notifications.`,
       url: `https://count.nyurejects.com/${cleanDomain}`,
+      type: "website",
+      siteName: "USA University Countdown",
     },
     twitter: {
+      card: "summary_large_image",
       title: `${university.name} Decision Date Countdown`,
       description: `Track ${university.name}'s college application decision dates and notifications.`,
     },
@@ -75,6 +97,17 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       icon: logoUrl,
       shortcut: logoUrl,
       apple: logoUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
   };
 }

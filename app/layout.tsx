@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import universities from "@/universities";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,7 +33,27 @@ export const metadata: Metadata = {
   description:
     "Track college application decision dates for top US universities. Get accurate countdown timers for early and regular decision notifications from Harvard, MIT, Stanford and more.",
   keywords:
-    "university countdown, college applications, USA universities, application deadlines, early decision, regular decision, university admissions, college notifications, ivy league decisions, college decision dates",
+    "university countdown, college applications, USA universities, application deadlines, early decision, regular decision, university admissions, college notifications, ivy league decisions, college decision dates, " +
+    universities
+      .map((uni) => [
+        uni.name,
+        `${uni.name} decision date`,
+        `${uni.name} admissions`,
+      ])
+      .flat()
+      .concat([
+        "university countdown",
+        "college applications",
+        "USA universities",
+        "application deadlines",
+        "early decision",
+        "regular decision",
+        "university admissions",
+        "college notifications",
+        "ivy league decisions",
+        "college decision dates",
+      ])
+      .join(", "),
   authors: [
     {
       name: "USA University Countdown",

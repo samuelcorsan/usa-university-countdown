@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://count.nyurejects.com
+Sitemap: https://count.nyurejects.com/sitemap.xml
