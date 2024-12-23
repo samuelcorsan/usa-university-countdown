@@ -283,32 +283,38 @@ export function UsaUniversityCountdown({
               </h1>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
                 {allUniversities.map((university) => (
-                  <button
+                  <Link
+                    href={`/${university.domain}`}
+                    className="w-full"
                     key={university.name}
-                    onClick={() => {
-                      handleSelectUniversity(university.name);
-                    }}
-                    className={cn(
-                      "flex items-center space-x-2 p-2 rounded-lg border transition-colors",
-                      "hover:bg-accent",
-                      selectedUniversity === university.name
-                        ? "border-primary bg-primary/10"
-                        : "border-border"
-                    )}
                   >
-                    <Image
-                      src={
-                        university.fileExists
-                          ? `/logos/${university.domain}.jpg`
-                          : `https://logo.clearbit.com/${university.domain}`
-                      }
-                      alt={`${university.name} logo`}
-                      width={24}
-                      height={24}
-                      className="rounded-full"
-                    />
-                    <span className="text-sm truncate">{university.name}</span>
-                  </button>
+                    <button
+                      key={university.name}
+                      onClick={() => {}}
+                      className={cn(
+                        "flex items-center space-x-2 p-2 rounded-lg border transition-colors w-full",
+                        "hover:bg-accent",
+                        selectedUniversity === university.name
+                          ? "border-primary bg-primary/10"
+                          : "border-border"
+                      )}
+                    >
+                      <Image
+                        src={
+                          university.fileExists
+                            ? `/logos/${university.domain}.jpg`
+                            : `https://logo.clearbit.com/${university.domain}`
+                        }
+                        alt={`${university.name} logo`}
+                        width={24}
+                        height={24}
+                        className="rounded-full"
+                      />
+                      <span className="text-sm truncate">
+                        {university.name}
+                      </span>
+                    </button>
+                  </Link>
                 ))}
 
                 <Dialog>
