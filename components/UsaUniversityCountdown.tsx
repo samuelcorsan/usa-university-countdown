@@ -176,28 +176,6 @@ export function UsaUniversityCountdown({
     }
   }, [initialDomain, mounted, customUniversities, router]);
 
-  const handleSelectUniversity = (value: string) => {
-    setSelectedUniversity(value);
-    const university = [...universities, ...customUniversities].find(
-      (uni) => uni.name === value
-    );
-    if (university && !initialDomain) {
-      const cleanDomain = university.domain
-        .replace(/^https?:\/\//, "")
-        .replace(/^www\./, "")
-        .replace(/\/+$/, "");
-
-      // Use View Transitions API
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          router.push(`/${cleanDomain}`);
-        });
-      } else {
-        router.push(`/${cleanDomain}`);
-      }
-    }
-  };
-
   const handleBack = () => {
     setShowCountdown(false);
     setSelectedUniversity("");
