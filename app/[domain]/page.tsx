@@ -57,7 +57,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       },
     };
   }
-
+  const universityAbbreviation = university.domain.split(".")[0];
   // Generate university-specific keywords
   const keywords = [
     university.name,
@@ -67,6 +67,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     `${university.name} regular decision`,
     `${university.name} countdown`,
     `${university.name} application results`,
+    `${universityAbbreviation} decision date`,
+    `${universityAbbreviation} admissions`,
+    `${universityAbbreviation} early decision`,
+    `${universityAbbreviation} regular decision`,
+    `${universityAbbreviation} countdown`,
+    `${universityAbbreviation} application results`,
     "college decisions",
     "university countdown",
     "admission dates",

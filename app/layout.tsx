@@ -37,6 +37,7 @@ export const metadata: Metadata = {
     universities
       .map((uni) => [
         uni.name,
+        uni.domain.split(".")[0],
         `${uni.name} decision date`,
         `${uni.name} admissions`,
       ])
@@ -52,6 +53,8 @@ export const metadata: Metadata = {
         "college notifications",
         "ivy league decisions",
         "college decision dates",
+        "rd decision date",
+        "regular decision date",
       ])
       .join(", "),
   authors: [
