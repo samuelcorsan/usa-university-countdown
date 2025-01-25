@@ -1,19 +1,25 @@
 import universities from "@/universities";
 
 export default async function sitemap() {
-  const baseUrl = "https://count.nyurejects.com";
+  const baseUrl = "https://collegedecision.us";
 
-  // Get university routes
+  // Get university routes with priorities
   const universityRoutes = universities.map((university) => ({
     url: `${baseUrl}/${university.domain}`,
     lastModified: new Date().toISOString(),
+    changeFrequency: "daily",
+    priority: 0.8,
   }));
 
-  // Add other routes
-  const routes = [""].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString(),
-  }));
+  // Add other routes with appropriate priorities
+  const routes = [
+    {
+      url: baseUrl,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "daily",
+      priority: 1.0,
+    },
+  ];
 
   return [...routes, ...universityRoutes];
 }

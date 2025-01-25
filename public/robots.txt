@@ -1,4 +1,16 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
 
-Sitemap: https://count.nyurejects.com/sitemap.xml
+# Allow Google Images to index images
+User-agent: Googlebot-Image
+Allow: /logos/
+Allow: /icons/
+
+# Allow Google Mobile to index mobile content
+User-agent: Googlebot-Mobile
+Allow: /
+
+Sitemap: https://collegedecision.us/sitemap.xml

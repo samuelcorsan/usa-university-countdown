@@ -90,7 +90,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     openGraph: {
       title: `${university.name} Decision Date Countdown`,
       description: `Track ${university.name}'s college application decision dates and notifications.`,
-      url: `https://count.nyurejects.com/${cleanDomain}`,
+      url: `https://collegedecision.us/${cleanDomain}`,
       type: "website",
       siteName: "USA University Countdown",
     },

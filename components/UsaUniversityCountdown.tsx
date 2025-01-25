@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -26,8 +26,12 @@ import {
 import universities from "@/universities";
 import { University } from "@/universities";
 import { CalendarButtons } from "./CalendarButtons";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import React from "react";
+import dynamic from "next/dynamic";
+import { Github, Instagram, Linkedin } from "lucide-react";
 
-function CountdownNumber({ value }: { value: number }) {
+const CountdownNumber = React.memo(({ value }: { value: number }) => {
   const displayValue = value.toString().padStart(2, "0");
 
   return (
@@ -53,7 +57,14 @@ function CountdownNumber({ value }: { value: number }) {
       ))}
     </div>
   );
-}
+});
+
+const DynamicDialog = dynamic(
+  () => import("@/components/ui/dialog").then((mod) => mod.Dialog),
+  {
+    ssr: false,
+  }
+);
 
 export function UsaUniversityCountdown({
   initialDomain,
@@ -90,6 +101,21 @@ export function UsaUniversityCountdown({
   const selectedUniversityData = universities.find(
     (uni) => uni.name === selectedUniversity
   );
+
+  const calculateTimeLeft = useCallback((targetDate: Date) => {
+    const now = new Date();
+    const difference = targetDate.getTime() - now.getTime();
+
+    if (difference > 0) {
+      return {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+    return null;
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -136,18 +162,16 @@ export function UsaUniversityCountdown({
         */
 
         if (differenceRegular > 0) {
-          setTimeLeftRegular({
-            days: Math.floor(differenceRegular / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((differenceRegular / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((differenceRegular / 1000 / 60) % 60),
-            seconds: Math.floor((differenceRegular / 1000) % 60),
-          });
+          const timeLeft = calculateTimeLeft(targetDateRegular);
+          if (timeLeft) {
+            setTimeLeftRegular(timeLeft);
+          }
         }
       }, 500);
 
       return () => clearInterval(timer);
     }
-  }, [showCountdown, selectedUniversityData, mounted]);
+  }, [showCountdown, selectedUniversityData, calculateTimeLeft, mounted]);
 
   useEffect(() => {
     const stored = localStorage.getItem("customUniversities");
@@ -252,7 +276,7 @@ export function UsaUniversityCountdown({
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background relative">
+      <div className="h-full flex flex-col items-center justify-center bg-background relative">
         <div className="bg-card p-8 rounded-lg shadow-md w-[90%] md:w-full max-w-4xl border border-border">
           {!showCountdown ? (
             <>
@@ -277,17 +301,27 @@ export function UsaUniversityCountdown({
                           : "border-border"
                       )}
                     >
-                      <Image
-                        src={
-                          university.fileExists
-                            ? `/logos/${university.domain}.jpg`
-                            : `https://logo.clearbit.com/${university.domain}`
-                        }
-                        alt={`${university.name} logo`}
-                        width={24}
-                        height={24}
-                        className="rounded-full"
-                      />
+                      <Avatar className="h-6 w-6">
+                        <Image
+                          src={
+                            university.fileExists
+                              ? `/logos/${university.domain}.jpg`
+                              : `https://logo.clearbit.com/${university.domain}`
+                          }
+                          alt={`${university.name} logo`}
+                          width={24}
+                          height={24}
+                          className="rounded-full bg-primary"
+                          loading="lazy"
+                        />
+                        <AvatarFallback>
+                          {university.name
+                            .split(" ")
+                            .map((word) => word[0])
+                            .join("")
+                            .slice(0, 2)}
+                        </AvatarFallback>
+                      </Avatar>
                       <span className="text-sm truncate">
                         {university.name}
                       </span>
@@ -383,20 +417,19 @@ export function UsaUniversityCountdown({
             <>
               {selectedUniversityData && (
                 <div className="flex items-center justify-center mb-6 space-x-4">
-                  <Image
-                    src={`/logos/${selectedUniversityData.domain}.jpg`}
-                    alt={`${selectedUniversityData.name} logo`}
-                    width={64}
-                    height={64}
-                    className="rounded-full"
-                    onError={(e) =>
-                      handleImageError(
-                        e,
-                        selectedUniversityData.domain,
-                        selectedUniversityData.name
-                      )
-                    }
-                  />
+                  <Avatar className="h-16 w-16">
+                    <AvatarImage
+                      src={`/logos/${selectedUniversityData.domain}.jpg`}
+                      alt={`${selectedUniversityData.name} logo`}
+                    />
+                    <AvatarFallback>
+                      {selectedUniversityData.name
+                        .split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="flex flex-col items-start">
                     <h1 className="text-2xl font-bold text-center">
                       {selectedUniversityData.name}
@@ -482,15 +515,50 @@ export function UsaUniversityCountdown({
             </>
           )}
         </div>
-        <footer className="mt-8 mb-4 text-sm text-muted-foreground">
-          Made with ❤️ by{" "}
-          <Link
-            href="https://linkedin.com/in/leonardo-ollero"
-            target="_blank"
-            className="font-medium text-primary hover:underline"
-          >
-            Leo
-          </Link>
+        <footer className="mt-8 mb-4 flex flex-col items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Link
+              href="https://github.com/MrlolDev"
+              target="_blank"
+              className="hover:text-primary transition-colors"
+              aria-label="GitHub Profile"
+            >
+              <Github className="h-5 w-5" />
+            </Link>
+            <Link
+              href="https://instagram.com/leo.rlhf"
+              target="_blank"
+              className="hover:text-primary transition-colors"
+              aria-label="Instagram Profile"
+            >
+              <Instagram className="h-5 w-5" />
+            </Link>
+            <Link
+              href="https://linkedin.com/in/leonardo-ollero"
+              target="_blank"
+              className="hover:text-primary transition-colors"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin className="h-5 w-5" />
+            </Link>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1">
+              Made with ❤️ by{" "}
+              <Link
+                href="https://instagram.com/leo.rlhf"
+                target="_blank"
+                className="font-medium text-primary hover:underline"
+              >
+                Leo
+              </Link>{" "}
+              from <span className="inline-flex items-center gap-1">🇪🇸</span>
+            </div>
+            <div>
+              © {new Date().getFullYear()} CollegeDecision.us All rights
+              reserved.
+            </div>
+          </div>
         </footer>
       </div>
     </TooltipProvider>

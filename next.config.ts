@@ -27,12 +27,29 @@ const pwaConfig = withPWA({
   register: true,
   skipWaiting: true,
   disable: isDevelopment,
-  exclude: [
-    // Add exclusions for development files
-    /\.map$/,
-    /asset-manifest\.json$/,
-    /[\\/]dev-sw\.js$/,
-    /[\\/]workbox-(.)*\.js$/,
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/logo\.clearbit\.com\/.*/,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "university-logos",
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+        },
+      },
+    },
+    {
+      urlPattern: /\.(png|jpg|jpeg|svg|gif)$/,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "image-cache",
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 60 * 24 * 30,
+        },
+      },
+    },
   ],
 })(nextConfig);
 

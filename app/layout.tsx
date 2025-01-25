@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/theme-toogle";
+import { ModeToggle } from "@/components/theme-toggle";
 import { Analytics } from "@vercel/analytics/react";
 import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -23,15 +23,20 @@ const geistMono = localFont({
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
   themeColor: "#000000",
+  colorScheme: "dark light",
+  imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  imagePreload: true,
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://count.nyurejects.com"),
-  title: "USA University Countdown | College Application Decision Dates",
+  metadataBase: new URL("https://collegedecision.us"),
+  title: "USA University Countdown | Real-time College Decision Date Tracker",
   description:
-    "Track college application decision dates for top US universities. Get accurate countdown timers for early and regular decision notifications from Harvard, MIT, Stanford and more.",
+    "Stay ahead with real-time countdowns for college decision dates at top US universities. Track early action, early decision, and regular decision release dates for Harvard, MIT, Stanford, and other prestigious institutions. Get accurate notification times and never miss an important admission decision.",
+  applicationName: "USA University Countdown",
+  referrer: "origin-when-cross-origin",
   keywords:
     "university countdown, college applications, USA universities, application deadlines, early decision, regular decision, university admissions, college notifications, ivy league decisions, college decision dates, " +
     universities
@@ -65,18 +70,29 @@ export const metadata: Metadata = {
   ],
   creator: "USA University Countdown",
   publisher: "USA University Countdown",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  verification: {
+    google: "cPoEeLVQ9rRKkbhtGjsfWJNWeFUYI7u_iudiKZNS1KI",
+  },
   manifest: "/manifest.json",
   themeColor: "#000000",
   alternates: {
-    canonical: "https://count.nyurejects.com",
+    canonical: "https://collegedecision.us",
+    languages: {
+      "en-US": "https://collegedecision.us",
+    },
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://count.nyurejects.com",
-    title: "USA University Countdown | College Application Decision Dates",
+    url: "https://collegedecision.us",
+    title: "USA University Countdown | Real-time College Decision Date Tracker",
     description:
-      "Track college application decision dates for top US universities. Get accurate countdown timers for early and regular decision notifications.",
+      "Stay informed with precise countdowns to college admission decisions. Track early action, early decision, and regular decision dates for top US universities, including Ivy League schools. Never miss an important admission notification with our accurate tracking system.",
     siteName: "USA University Countdown",
     images: [
       {
@@ -89,9 +105,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "USA University Countdown | College Application Decision Dates",
+    title: "USA University Countdown | Real-time College Decision Date Tracker",
     description:
-      "Track college application decision dates for top US universities. Get accurate countdown timers for early and regular decision notifications.",
+      "Stay informed with precise countdowns to college admission decisions. Track early action, early decision, and regular decision dates for top US universities, including Ivy League schools. Never miss an important admission notification.",
     creator: "@usauniversitycd",
     images: ["/og-image.jpg"],
   },
@@ -123,8 +139,8 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "USA University Countdown",
     description:
-      "Track college application decision dates for top US universities",
-    url: "https://count.nyurejects.com",
+      "Comprehensive tracking system for college application decision dates at top US universities. Features real-time countdowns for early action, early decision, and regular decision notifications.",
+    url: "https://collegedecision.us",
   };
 
   return (
@@ -134,9 +150,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link
+          rel="preconnect"
+          href="https://logo.clearbit.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://logo.clearbit.com" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative overflow-auto py-5`}
       >
         <ThemeProvider
           attribute="class"
@@ -155,7 +177,7 @@ export default function RootLayout({
           </ErrorBoundary>
         </ThemeProvider>
       </body>
-      <GoogleAnalytics gaId="G-GM5JBE83WY" />
+      <GoogleAnalytics gaId="G-5L0ZT9WWCH" />
     </html>
   );
 }
