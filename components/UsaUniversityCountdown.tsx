@@ -28,7 +28,6 @@ import { University } from "@/universities";
 import { CalendarButtons } from "./CalendarButtons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
-import dynamic from "next/dynamic";
 import { Github, Instagram, Linkedin } from "lucide-react";
 
 const CountdownNumber = React.memo(({ value }: { value: number }) => {
@@ -58,13 +57,9 @@ const CountdownNumber = React.memo(({ value }: { value: number }) => {
     </div>
   );
 });
+CountdownNumber.displayName = "CountdownNumber";
 
-const DynamicDialog = dynamic(
-  () => import("@/components/ui/dialog").then((mod) => mod.Dialog),
-  {
-    ssr: false,
-  }
-);
+const showProductHuntBadge = false;
 
 export function UsaUniversityCountdown({
   initialDomain,
@@ -250,25 +245,6 @@ export function UsaUniversityCountdown({
   };
 
   const allUniversities = [...universities, ...customUniversities];
-
-  const handleImageError = (
-    e: React.SyntheticEvent<HTMLImageElement, Event>,
-    domain: string,
-    universityName: string
-  ) => {
-    const target = e.target as HTMLImageElement;
-
-    // Try Clearbit as first fallback
-    target.src = `https://logo.clearbit.com/${domain}`;
-
-    // If Clearbit fails, use UI Avatars as final fallback
-    target.onerror = () => {
-      target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
-        universityName
-      )}&background=random`;
-      target.onerror = null; // Prevent infinite loop
-    };
-  };
 
   if (!mounted) {
     return null; // or a loading state
@@ -516,6 +492,22 @@ export function UsaUniversityCountdown({
           )}
         </div>
         <footer className="mt-8 mb-4 flex flex-col items-center gap-4 text-sm text-muted-foreground">
+          {showProductHuntBadge && (
+            <a
+              href="https://www.producthunt.com/posts/usa-university-countdown?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-usa&#0045;university&#0045;countdown"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-4"
+            >
+              <Image
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=819313&theme=neutral&t=1737822372083"
+                alt="USA University Countdown - College application decision dates | Product Hunt"
+                width={250}
+                height={54}
+                unoptimized
+              />
+            </a>
+          )}
           <div className="flex items-center gap-4">
             <Link
               href="https://github.com/MrlolDev"
