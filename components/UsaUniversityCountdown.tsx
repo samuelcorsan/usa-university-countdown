@@ -508,37 +508,11 @@ export function UsaUniversityCountdown({
               />
             </a>
           )}
-          <div className="flex items-center gap-4">
-            <Link
-              href="https://github.com/MrlolDev"
-              target="_blank"
-              className="hover:text-primary transition-colors"
-              aria-label="GitHub Profile"
-            >
-              <Github className="h-5 w-5" />
-            </Link>
-            <Link
-              href="https://instagram.com/leo.rlhf"
-              target="_blank"
-              className="hover:text-primary transition-colors"
-              aria-label="Instagram Profile"
-            >
-              <Instagram className="h-5 w-5" />
-            </Link>
-            <Link
-              href="https://linkedin.com/in/leonardo-ollero"
-              target="_blank"
-              className="hover:text-primary transition-colors"
-              aria-label="LinkedIn Profile"
-            >
-              <Linkedin className="h-5 w-5" />
-            </Link>
-          </div>
           <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-1">
               Made with ❤️ by{" "}
               <Link
-                href="https://instagram.com/leo.rlhf"
+                href="https://mrlol.dev"
                 target="_blank"
                 className="font-medium text-primary hover:underline"
               >
