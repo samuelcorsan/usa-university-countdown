@@ -28,7 +28,6 @@ import { University } from "@/universities";
 import { CalendarButtons } from "./CalendarButtons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
-import { Github, Instagram, Linkedin } from "lucide-react";
 
 const CountdownNumber = React.memo(({ value }: { value: number }) => {
   const displayValue = value.toString().padStart(2, "0");
