@@ -78,12 +78,12 @@ export function UsaUniversityCountdown({
   const router = useRouter();
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [showCountdown, setShowCountdown] = useState(false);
-  /*const [timeLeft, setTimeLeft] = useState({
+  const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
-  });*/
+  });
   const [timeLeftRegular, setTimeLeftRegular] = useState({
     days: 0,
     hours: 0,
@@ -131,15 +131,25 @@ export function UsaUniversityCountdown({
         const defaultTime = "19:00:00"; // 7 PM default
 
         // Early notification countdown
-        /*const [dayEarly, monthEarly, yearEarly] =
-          selectedUniversityData.notificationEarly.split("-");
-        const targetDateEarly = new Date(
-          `20${yearEarly}-${monthEarly}-${dayEarly}T${
-            selectedUniversityData.time || defaultTime
-          }-05:00`
-        );
-        // const differenceEarly = targetDateEarly.getTime() - now.getTime();
-        */
+        if (selectedUniversityData.showEarly) {
+          const [dayEarly, monthEarly, yearEarly] =
+            selectedUniversityData.notificationEarly.split("-");
+          const targetDateEarly = new Date(
+            `20${yearEarly}-${monthEarly}-${dayEarly}T${
+              selectedUniversityData.time || defaultTime
+            }-05:00`
+          );
+          const differenceEarly = targetDateEarly.getTime() - now.getTime();
+
+          if (differenceEarly > 0) {
+            setTimeLeft({
+              days: Math.floor(differenceEarly / (1000 * 60 * 60 * 24)),
+              hours: Math.floor((differenceEarly / (1000 * 60 * 60)) % 24),
+              minutes: Math.floor((differenceEarly / 1000 / 60) % 60),
+              seconds: Math.floor((differenceEarly / 1000) % 60),
+            });
+          }
+        }
 
         // Regular notification countdown
         const [dayRegular, monthRegular, yearRegular] =
@@ -150,17 +160,6 @@ export function UsaUniversityCountdown({
           }-05:00`
         );
         const differenceRegular = targetDateRegular.getTime() - now.getTime();
-
-        /**
-        if (differenceEarly > 0) {
-          setTimeLeft({
-            days: Math.floor(differenceEarly / (1000 * 60 * 60 * 24)),
-            hours: Math.floor((differenceEarly / (1000 * 60 * 60)) % 24),
-            minutes: Math.floor((differenceEarly / 1000 / 60) % 60),
-            seconds: Math.floor((differenceEarly / 1000) % 60),
-          });
-        }
-        */
 
         if (differenceRegular > 0) {
           const timeLeft = calculateTimeLeft(targetDateRegular);
@@ -453,29 +452,31 @@ export function UsaUniversityCountdown({
                   </div>
                 </div>
               )}
-              {/**
-              <h2 className="text-xl font-semibold mb-4 text-center">
-                Early Decision/Action Countdown
-              </h2>
-              <div className="grid grid-cols-4 gap-2 text-center mb-6">
-                <div className="bg-accent p-2 rounded ">
-                  <CountdownNumber value={timeLeft.days} />
-                  <div className="text-sm">Days</div>
-                </div>
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeft.hours} />
-                  <div className="text-sm">Hours</div>
-                </div>
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeft.minutes} />
-                  <div className="text-sm">Minutes</div>
-                </div>
-                <div className="bg-accent p-2 rounded">
-                  <CountdownNumber value={timeLeft.seconds} />
-                  <div className="text-sm">Seconds</div>
-                </div>
-              </div>
-              */}
+              {selectedUniversityData?.showEarly && (
+                <section className="flex flex-col items-center justify-center">
+                  <h2 className="text-xl font-semibold mb-4 text-center">
+                    Early Decision 2 Countdown
+                  </h2>
+                  <div className="grid grid-cols-4 gap-2 text-center mb-6 w-fit justify-center items-center">
+                    <div className="bg-accent p-2 rounded w-full">
+                      <CountdownNumber value={timeLeft.days} />
+                      <div className="text-sm">Days</div>
+                    </div>
+                    <div className="bg-accent p-2 rounded w-full">
+                      <CountdownNumber value={timeLeft.hours} />
+                      <div className="text-sm">Hours</div>
+                    </div>
+                    <div className="bg-accent p-2 rounded w-full">
+                      <CountdownNumber value={timeLeft.minutes} />
+                      <div className="text-sm">Minutes</div>
+                    </div>
+                    <div className="bg-accent p-2 rounded w-full">
+                      <CountdownNumber value={timeLeft.seconds} />
+                      <div className="text-sm">Seconds</div>
+                    </div>
+                  </div>
+                </section>
+              )}
               <section className="flex flex-col items-center justify-center">
                 <h2 className="text-xl font-semibold mb-4 text-center">
                   Regular Decision Countdown

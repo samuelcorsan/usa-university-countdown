@@ -83,7 +83,8 @@ const universities = [
   {
     name: "Johns Hopkins University",
     domain: "jhu.edu",
-    notificationEarly: "13-12-24",
+    notificationEarly: "14-02-25",
+    showEarly: true,
     notificationRegular: "21-03-25",
     time: "15:00",
     fileExists: true,
@@ -92,8 +93,10 @@ const universities = [
   {
     name: "New York University",
     domain: "nyu.edu",
-    notificationEarly: "12-12-24",
+    showEarly: true,
+    notificationEarly: "13-02-25",
     notificationRegular: "01-04-25",
+    time: "16:00",
     fileExists: true,
     notConfirmedDate: true,
   },
@@ -241,21 +244,31 @@ const universities = [
   {
     name: "Washington University in St. Louis",
     domain: "wustl.edu",
-    notificationEarly: "12-12-24",
-    notificationRegular: "28-02-25",
+    notificationEarly: "13-02-25",
+    showEarly: true,
+    notificationRegular: "28-03-25",
     time: "19:00",
     fileExists: true,
     notConfirmedDate: true,
   },
   {
     name: "Vanderbilt University",
-
     domain: "vanderbilt.edu",
     notificationEarly: "17-12-24",
     notificationRegular: "27-03-25",
     time: "18:00",
     fileExists: true,
     notConfirmedDate: true,
+  },
+  {
+    name: "University of Chicago",
+    domain: "uchicago.edu",
+    notificationEarly: "14-02-25",
+    showEarly: true,
+    notificationRegular: "28-03-25",
+    time: "19:00",
+    notConfirmedDate: true,
+    fileExists: true,
   },
   {
     name: "Rice University",
@@ -371,6 +384,7 @@ type University = {
   domain: string;
   notificationEarly: string;
   notificationRegular: string;
+  showEarly?: boolean;
   fileExists: boolean;
   notConfirmedDate?: boolean;
   time?: string;
