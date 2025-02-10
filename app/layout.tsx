@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import universities from "@/universities";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -174,6 +175,7 @@ export default function RootLayout({
               <ModeToggle />
             </div>
             {children}
+            <Toaster />
           </ErrorBoundary>
         </ThemeProvider>
       </body>

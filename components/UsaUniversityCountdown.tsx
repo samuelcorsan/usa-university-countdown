@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,6 +29,7 @@ import { University } from "@/universities";
 import { CalendarButtons } from "./CalendarButtons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
+import { toast } from "@/hooks/use-toast";
 
 const CountdownNumber = React.memo(({ value }: { value: number }) => {
   const displayValue = value.toString().padStart(2, "0");
@@ -60,6 +62,14 @@ CountdownNumber.displayName = "CountdownNumber";
 
 const showProductHuntBadge = false;
 
+const normalizeUniversityName = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/\b(university|college|institute|of|technology)\b/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .trim();
+};
+
 export function UsaUniversityCountdown({
   initialDomain,
 }: {
@@ -91,6 +101,10 @@ export function UsaUniversityCountdown({
   });
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
+  const [isBottom, setIsBottom] = useState(false);
+  const [suggestion, setSuggestion] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const suggestDialogCloseRef = useRef<HTMLButtonElement>(null);
 
   const selectedUniversityData = universities.find(
     (uni) => uni.name === selectedUniversity
@@ -245,6 +259,78 @@ export function UsaUniversityCountdown({
 
   const allUniversities = [...universities, ...customUniversities];
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const bottom =
+      Math.abs(
+        e.currentTarget.scrollHeight -
+          e.currentTarget.scrollTop -
+          e.currentTarget.clientHeight
+      ) < 1;
+    setIsBottom(bottom);
+  };
+
+  const handleSuggestUniversity = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Normalize the suggestion
+      const normalizedSuggestion = normalizeUniversityName(suggestion);
+
+      // Check if the university already exists
+      const existingUniversity = universities.find((uni) => {
+        const normalizedName = normalizeUniversityName(uni.name);
+        return (
+          normalizedName.includes(normalizedSuggestion) ||
+          normalizedSuggestion.includes(normalizedName)
+        );
+      });
+
+      if (existingUniversity) {
+        toast({
+          title: "University Already Listed",
+          description: `${existingUniversity.name} is already in our database.`,
+          variant: "destructive",
+          duration: 5000,
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      const response = await fetch("/api/suggest-university", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ suggestion }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit suggestion");
+      }
+
+      toast({
+        title: "Suggestion Sent",
+        description:
+          "Thank you for suggesting a university. We'll review it soon!",
+        duration: 5000,
+      });
+
+      setSuggestion("");
+      suggestDialogCloseRef.current?.click();
+    } catch (error) {
+      console.error("Error suggesting university:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit suggestion. Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (!mounted) {
     return null; // or a loading state
   }
@@ -258,134 +344,110 @@ export function UsaUniversityCountdown({
               <h1 className="text-2xl font-bold mb-6 text-center">
                 Select Your University
               </h1>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
-                {allUniversities.map((university) => (
-                  <Link
-                    href={`/${university.domain}`}
-                    className="w-full"
-                    key={university.name}
-                  >
-                    <button
+              <div className="relative">
+                <div
+                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4 max-h-[60vh] overflow-y-auto"
+                  onScroll={handleScroll}
+                >
+                  {allUniversities.map((university) => (
+                    <Link
+                      href={`/${university.domain}`}
+                      className="w-full"
                       key={university.name}
-                      onClick={() => {}}
-                      className={cn(
-                        "flex items-center space-x-2 p-2 rounded-lg border transition-colors w-full",
-                        "hover:bg-accent",
-                        selectedUniversity === university.name
-                          ? "border-primary bg-primary/10"
-                          : "border-border"
-                      )}
                     >
-                      <Avatar className="h-6 w-6">
-                        <Image
-                          src={
-                            university.fileExists
-                              ? `/logos/${university.domain}.jpg`
-                              : `https://logo.clearbit.com/${university.domain}`
-                          }
-                          alt={`${university.name} logo`}
-                          width={24}
-                          height={24}
-                          className="rounded-full bg-primary"
-                          loading="lazy"
-                        />
-                        <AvatarFallback>
-                          {university.name
-                            .split(" ")
-                            .map((word) => word[0])
-                            .join("")
-                            .slice(0, 2)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm truncate">
-                        {university.name}
-                      </span>
-                    </button>
-                  </Link>
-                ))}
+                      <button
+                        key={university.name}
+                        onClick={() => {}}
+                        className={cn(
+                          "flex items-center space-x-2 p-2 rounded-lg border transition-colors w-full",
+                          "hover:bg-accent",
+                          selectedUniversity === university.name
+                            ? "border-primary bg-primary/10"
+                            : "border-border"
+                        )}
+                      >
+                        <Avatar className="h-6 w-6">
+                          <Image
+                            src={
+                              university.fileExists
+                                ? `/logos/${university.domain}.jpg`
+                                : `https://logo.clearbit.com/${university.domain}`
+                            }
+                            alt={`${university.name} logo`}
+                            width={24}
+                            height={24}
+                            className="rounded-full bg-primary"
+                            loading="lazy"
+                          />
+                          <AvatarFallback>
+                            {university.name
+                              .split(" ")
+                              .map((word) => word[0])
+                              .join("")
+                              .slice(0, 2)}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm truncate">
+                          {university.name}
+                        </span>
+                      </button>
+                    </Link>
+                  ))}
 
-                <Dialog>
-                  <DialogTrigger asChild>
-                    {/**  <button className="flex items-center justify-center space-x-2 p-2 rounded-lg border border-dashed border-border hover:border-foreground hover:bg-accent transition-colors">
-                    <span className="text-sm">+ Add University</span>
-                  </button>
-                  */}
-                  </DialogTrigger>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button className="flex items-center justify-center space-x-2 p-2 rounded-lg border border-dashed border-border hover:border-foreground hover:bg-accent transition-colors w-full">
+                        <span className="text-sm">🎓 Suggest a University</span>
+                      </button>
+                    </DialogTrigger>
 
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add New University</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="name">University Name</Label>
-                        <Input
-                          id="name"
-                          value={newUniversity.name}
-                          onChange={(e) =>
-                            setNewUniversity({
-                              ...newUniversity,
-                              name: e.target.value,
-                            })
-                          }
+                    <DialogContent className="max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Suggest a University</DialogTitle>
+                        <DialogDescription>
+                          Help us expand our database by suggesting a university
+                          to add.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <form
+                        onSubmit={handleSuggestUniversity}
+                        className="grid gap-4 py-4"
+                      >
+                        <div className="grid gap-2">
+                          <Label htmlFor="suggestion">
+                            University Name or Domain
+                          </Label>
+                          <Input
+                            id="suggestion"
+                            placeholder="e.g., Stanford University or stanford.edu"
+                            value={suggestion}
+                            onChange={(e) => setSuggestion(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <DialogClose
+                          ref={suggestDialogCloseRef}
+                          className="hidden"
                         />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="domain">
-                          Domain (e.g., harvard.edu)
-                        </Label>
-                        <Input
-                          id="domain"
-                          value={newUniversity.domain}
-                          onChange={(e) =>
-                            setNewUniversity({
-                              ...newUniversity,
-                              domain: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label>Early Decision Date (DD-MM-YY)</Label>
-                        <Input
-                          placeholder="15-12-24"
-                          value={newUniversity.notificationEarly}
-                          onChange={(e) =>
-                            setNewUniversity({
-                              ...newUniversity,
-                              notificationEarly: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label>Regular Decision Date (DD-MM-YY)</Label>
-                        <Input
-                          placeholder="28-03-25"
-                          value={newUniversity.notificationRegular}
-                          onChange={(e) =>
-                            setNewUniversity({
-                              ...newUniversity,
-                              notificationRegular: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                    </div>
-                    <DialogClose ref={dialogCloseRef} className="hidden" />
-                    <Button
-                      onClick={handleAddUniversity}
-                      disabled={
-                        !newUniversity.name ||
-                        !newUniversity.domain ||
-                        !newUniversity.notificationEarly ||
-                        !newUniversity.notificationRegular
-                      }
-                    >
-                      Add University
-                    </Button>
-                  </DialogContent>
-                </Dialog>
+                        <Button
+                          type="submit"
+                          disabled={!suggestion || isSubmitting}
+                        >
+                          {isSubmitting ? "Submitting..." : "Submit Suggestion"}
+                        </Button>
+                      </form>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+
+                {/* Mobile scroll indicator - hidden when at bottom */}
+                {!isBottom && (
+                  <div className="md:hidden absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-card to-transparent pointer-events-none flex items-end justify-center pb-2">
+                    <span className="text-muted-foreground text-sm animate-bounce">
+                      Scroll for more universities ↓
+                    </span>
+                  </div>
+                )}
               </div>
             </>
           ) : (
