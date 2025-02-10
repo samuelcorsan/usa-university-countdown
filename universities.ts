@@ -347,6 +347,24 @@ const universities = [
     fileExists: true,
     notConfirmedDate: true,
   },
+  {
+    name: "Case Western Reserve University",
+    domain: "case.edu",
+    notificationEarly: "15-12-24",
+    notificationRegular: "22-03-25",
+    time: "09:00",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
+  {
+    name: "Barnard College",
+    domain: "barnard.edu",
+    notificationEarly: "15-12-24",
+    notificationRegular: "26-03-25",
+    time: "19:00",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
 ] as University[];
 type University = {
   name: string;
