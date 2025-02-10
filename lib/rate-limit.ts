@@ -1,10 +1,4 @@
-export function rateLimit({
-  interval,
-  uniqueTokenPerInterval,
-}: {
-  interval: number;
-  uniqueTokenPerInterval: number;
-}) {
+export function rateLimit({ interval }: { interval: number }) {
   const tokens = new Map();
   const buckets = new Map();
 

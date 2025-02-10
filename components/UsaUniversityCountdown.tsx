@@ -93,13 +93,6 @@ export function UsaUniversityCountdown({
   const [customUniversities, setCustomUniversities] = useState<University[]>(
     []
   );
-  const [newUniversity, setNewUniversity] = useState({
-    name: "",
-    domain: "",
-    notificationEarly: "",
-    notificationRegular: "",
-  });
-  const dialogCloseRef = useRef<HTMLButtonElement>(null);
   const [mounted, setMounted] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
   const [suggestion, setSuggestion] = useState("");
@@ -222,39 +215,6 @@ export function UsaUniversityCountdown({
         router.push("/");
       }
     }
-  };
-
-  const handleAddUniversity = () => {
-    if (!newUniversity.notificationEarly || !newUniversity.notificationRegular)
-      return;
-
-    const cleanDomain = (domain: string) => {
-      return domain
-        .replace(/^https?:\/\//, "")
-        .replace(/^www\./, "")
-        .replace(/\/+$/, "")
-        .trim();
-    };
-
-    const updated = [
-      ...customUniversities,
-      {
-        ...newUniversity,
-        domain: cleanDomain(newUniversity.domain),
-        fileExists: false,
-      },
-    ];
-
-    setCustomUniversities(updated);
-    localStorage.setItem("customUniversities", JSON.stringify(updated));
-    setNewUniversity({
-      name: "",
-      domain: "",
-      notificationEarly: "",
-      notificationRegular: "",
-    });
-
-    dialogCloseRef.current?.click();
   };
 
   const allUniversities = [...universities, ...customUniversities];

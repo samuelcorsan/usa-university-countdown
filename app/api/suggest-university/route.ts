@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 
 const limiter = rateLimit({
   interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 500,
 });
 
 export async function POST(request: Request) {
