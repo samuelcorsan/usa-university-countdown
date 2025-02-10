@@ -242,13 +242,14 @@ const universities = [
     name: "Washington University in St. Louis",
     domain: "wustl.edu",
     notificationEarly: "12-12-24",
-    notificationRegular: "14-02-25",
+    notificationRegular: "28-02-25",
     time: "19:00",
     fileExists: true,
-    notConfirmedDate: false,
+    notConfirmedDate: true,
   },
   {
     name: "Vanderbilt University",
+
     domain: "vanderbilt.edu",
     notificationEarly: "17-12-24",
     notificationRegular: "27-03-25",
