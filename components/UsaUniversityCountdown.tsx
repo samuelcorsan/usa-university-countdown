@@ -31,33 +31,41 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";
 import { toast } from "@/hooks/use-toast";
 
-const CountdownNumber = React.memo(({ value }: { value: number }) => {
-  const displayValue = value.toString().padStart(2, "0");
+const CountdownNumber = React.memo(
+  ({ value, isUrgent }: { value: number; isUrgent?: boolean }) => {
+    const displayValue = value.toString().padStart(2, "0");
 
-  return (
-    <div className="flex justify-center space-x-[1px]">
-      {displayValue.split("").map((digit, index) => (
-        <div key={index} className="relative h-[36px] w-[28px] overflow-hidden">
+    return (
+      <div className="flex justify-center space-x-[1px]">
+        {displayValue.split("").map((digit, index) => (
           <div
-            className="absolute w-full transition-transform duration-300 flex flex-col"
-            style={{
-              transform: `translateY(-${parseInt(digit) * 36}px)`,
-            }}
+            key={index}
+            className="relative h-[36px] w-[28px] overflow-hidden"
           >
-            {[...Array(10)].map((_, i) => (
-              <div
-                key={i}
-                className="h-[36px] flex items-center justify-center text-2xl font-bold"
-              >
-                {i}
-              </div>
-            ))}
+            <div
+              className={cn(
+                "absolute w-full transition-transform duration-300 flex flex-col",
+                isUrgent && "text-destructive"
+              )}
+              style={{
+                transform: `translateY(-${parseInt(digit) * 36}px)`,
+              }}
+            >
+              {[...Array(10)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-[36px] flex items-center justify-center text-2xl font-bold"
+                >
+                  {i}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-  );
-});
+        ))}
+      </div>
+    );
+  }
+);
 CountdownNumber.displayName = "CountdownNumber";
 
 const showProductHuntBadge = false;
@@ -68,6 +76,15 @@ const normalizeUniversityName = (name: string): string => {
     .replace(/\b(university|college|institute|of|technology)\b/g, "")
     .replace(/[^a-z0-9]/g, "")
     .trim();
+};
+
+const isTimeUrgent = (timeLeft: {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}) => {
+  return timeLeft.days === 0 && timeLeft.hours === 0;
 };
 
 export function UsaUniversityCountdown({
@@ -117,6 +134,19 @@ export function UsaUniversityCountdown({
     }
     return null;
   }, []);
+
+  const isDecisionToday = (university: University) => {
+    const now = new Date();
+    const today = `${(now.getMonth() + 1).toString().padStart(2, "0")}-${now
+      .getDate()
+      .toString()
+      .padStart(2, "0")}-${now.getFullYear().toString().slice(-2)}`;
+
+    return (
+      university.notificationRegular === today ||
+      (university.showEarly && university.notificationEarly === today)
+    );
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -322,7 +352,9 @@ export function UsaUniversityCountdown({
                           "hover:bg-accent",
                           selectedUniversity === university.name
                             ? "border-primary bg-primary/10"
-                            : "border-border"
+                            : "border-border",
+                          isDecisionToday(university) &&
+                            "animate-pulse border-primary"
                         )}
                       >
                         <Avatar className="h-6 w-6">
@@ -348,6 +380,7 @@ export function UsaUniversityCountdown({
                         </Avatar>
                         <span className="text-sm truncate">
                           {university.name}
+                          {isDecisionToday(university) && " 🎉"}
                         </span>
                       </button>
                     </Link>
@@ -459,19 +492,31 @@ export function UsaUniversityCountdown({
                   </h2>
                   <div className="grid grid-cols-4 gap-2 text-center mb-6 w-fit justify-center items-center">
                     <div className="bg-accent p-2 rounded w-full">
-                      <CountdownNumber value={timeLeft.days} />
+                      <CountdownNumber
+                        value={timeLeft.days}
+                        isUrgent={isTimeUrgent(timeLeft)}
+                      />
                       <div className="text-sm">Days</div>
                     </div>
                     <div className="bg-accent p-2 rounded w-full">
-                      <CountdownNumber value={timeLeft.hours} />
+                      <CountdownNumber
+                        value={timeLeft.hours}
+                        isUrgent={isTimeUrgent(timeLeft)}
+                      />
                       <div className="text-sm">Hours</div>
                     </div>
                     <div className="bg-accent p-2 rounded w-full">
-                      <CountdownNumber value={timeLeft.minutes} />
+                      <CountdownNumber
+                        value={timeLeft.minutes}
+                        isUrgent={isTimeUrgent(timeLeft)}
+                      />
                       <div className="text-sm">Minutes</div>
                     </div>
                     <div className="bg-accent p-2 rounded w-full">
-                      <CountdownNumber value={timeLeft.seconds} />
+                      <CountdownNumber
+                        value={timeLeft.seconds}
+                        isUrgent={isTimeUrgent(timeLeft)}
+                      />
                       <div className="text-sm">Seconds</div>
                     </div>
                   </div>
@@ -483,19 +528,31 @@ export function UsaUniversityCountdown({
                 </h2>
                 <div className="grid grid-cols-4 gap-2 text-center mb-6 w-fit justify-center items-center">
                   <div className="bg-accent p-2 rounded w-full">
-                    <CountdownNumber value={timeLeftRegular.days} />
+                    <CountdownNumber
+                      value={timeLeftRegular.days}
+                      isUrgent={isTimeUrgent(timeLeftRegular)}
+                    />
                     <div className="text-sm">Days</div>
                   </div>
                   <div className="bg-accent p-2 rounded w-full">
-                    <CountdownNumber value={timeLeftRegular.hours} />
+                    <CountdownNumber
+                      value={timeLeftRegular.hours}
+                      isUrgent={isTimeUrgent(timeLeftRegular)}
+                    />
                     <div className="text-sm">Hours</div>
                   </div>
                   <div className="bg-accent p-2 rounded w-full">
-                    <CountdownNumber value={timeLeftRegular.minutes} />
+                    <CountdownNumber
+                      value={timeLeftRegular.minutes}
+                      isUrgent={isTimeUrgent(timeLeftRegular)}
+                    />
                     <div className="text-sm">Minutes</div>
                   </div>
                   <div className="bg-accent p-2 rounded w-full">
-                    <CountdownNumber value={timeLeftRegular.seconds} />
+                    <CountdownNumber
+                      value={timeLeftRegular.seconds}
+                      isUrgent={isTimeUrgent(timeLeftRegular)}
+                    />
                     <div className="text-sm">Seconds</div>
                   </div>
                 </div>
