@@ -378,6 +378,14 @@ const universities = [
     fileExists: true,
     notConfirmedDate: true,
   },
+  {
+    name: "University of Texas at Austin",
+    domain: "utexas.edu",
+    notificationRegular: "07-02-25",
+    time: "19:00",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
 ] as University[];
 type University = {
   name: string;
