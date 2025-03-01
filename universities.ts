@@ -6,7 +6,7 @@ const universities = [
     notificationRegular: "27-03-25",
     time: "19:00",
     fileExists: true,
-    notConfirmedDate: true,
+    notConfirmedDate: false,
   },
   {
     name: "Stanford University",
@@ -24,7 +24,7 @@ const universities = [
     notificationRegular: "14-03-25",
     time: "18:28",
     fileExists: true,
-    notConfirmedDate: true,
+    notConfirmedDate: false,
   },
   {
     name: "California Institute of Technology",
@@ -42,7 +42,7 @@ const universities = [
     notificationRegular: "27-03-25",
     time: "19:00",
     fileExists: true,
-    notConfirmedDate: true,
+    notConfirmedDate: false,
   },
   {
     name: "Princeton University",
@@ -51,7 +51,7 @@ const universities = [
     notificationRegular: "27-03-25",
     time: "19:00",
     fileExists: true,
-    notConfirmedDate: true,
+    notConfirmedDate: false,
   },
   {
     name: "Yale University",
@@ -69,7 +69,7 @@ const universities = [
     notificationRegular: "27-03-25",
     time: "19:00",
     fileExists: true,
-    notConfirmedDate: true,
+    notConfirmedDate: false,
   },
   {
     name: "University of Pennsylvania",
@@ -78,7 +78,7 @@ const universities = [
     notificationRegular: "27-03-25",
     time: "19:00",
     fileExists: true,
-    notConfirmedDate: true,
+    notConfirmedDate: false,
   },
   {
     name: "Johns Hopkins University",
