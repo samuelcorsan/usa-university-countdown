@@ -386,6 +386,14 @@ const universities = [
     fileExists: true,
     notConfirmedDate: true,
   },
+  {
+    name: "University of Miami (UMiami)",
+    domain: "miami.edu",
+    notificationRegular: "21-03-25",
+    time: "19:00",
+    fileExists: true,
+    notConfirmedDate: true,
+  },
 ] as University[];
 type University = {
   name: string;
