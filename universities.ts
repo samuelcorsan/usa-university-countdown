@@ -265,7 +265,7 @@ const universities = [
     domain: "uchicago.edu",
     notificationEarly: "14-02-25",
     showEarly: true,
-    notificationRegular: "28-03-25",
+    notificationRegular: "14-03-25",
     time: "19:00",
     notConfirmedDate: true,
     fileExists: true,
