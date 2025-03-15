@@ -32,10 +32,10 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://collegedecision.us"),
-  title: "USA University Countdown | Real-time College Decision Date Tracker",
+  title: "USA University Countdown",
   description:
-    "Stay ahead with real-time countdowns for college decision dates at top US universities. Track early action, early decision, and regular decision release dates for Harvard, MIT, Stanford, and other prestigious institutions. Get accurate notification times and never miss an important admission decision.",
+    "Comprehensive tracking system for college application decision dates at top US universities. Features real-time countdowns for early action, early decision, and regular decision notifications.",
+  metadataBase: new URL("https://collegedecision.us"),
   applicationName: "USA University Countdown",
   referrer: "origin-when-cross-origin",
   keywords:
@@ -125,6 +125,16 @@ export const metadata: Metadata = {
   },
 };
 
+// Add this new jsonLd metadata
+export const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "USA University Countdown",
+  description:
+    "Comprehensive tracking system for college application decision dates at top US universities. Features real-time countdowns for early action, early decision, and regular decision notifications.",
+  url: "https://collegedecision.us",
+};
+
 // Dynamically import service worker registration
 const SwRegister = dynamic(() => import("./sw-register"), {
   ssr: true,
@@ -135,22 +145,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "USA University Countdown",
-    description:
-      "Comprehensive tracking system for college application decision dates at top US universities. Features real-time countdowns for early action, early decision, and regular decision notifications.",
-    url: "https://collegedecision.us",
-  };
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
         <link
           rel="preconnect"
           href="https://logo.clearbit.com"

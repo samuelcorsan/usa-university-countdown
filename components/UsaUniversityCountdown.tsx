@@ -137,14 +137,52 @@ export function UsaUniversityCountdown({
 
   const isDecisionToday = (university: University) => {
     const now = new Date();
-    const today = `${(now.getMonth() + 1).toString().padStart(2, "0")}-${now
-      .getDate()
+    const today = `${now.getDate().toString().padStart(2, "0")}-${(
+      now.getMonth() + 1
+    )
       .toString()
       .padStart(2, "0")}-${now.getFullYear().toString().slice(-2)}`;
 
-    return (
+    const isToday =
       university.notificationRegular === today ||
-      (university.showEarly && university.notificationEarly === today)
+      (university.showEarly && university.notificationEarly === today);
+    console.log(
+      university.name,
+      university.notificationRegular,
+      today,
+      isToday
+    );
+    return isToday;
+  };
+
+  const hasDecisionPassed = (university: University) => {
+    const now = new Date();
+    const defaultTime = "19:00:00"; // 7 PM default
+
+    // Check regular decision date
+    const [dayRegular, monthRegular, yearRegular] =
+      university.notificationRegular.split("-");
+    const targetDateRegular = new Date(
+      `20${yearRegular}-${monthRegular}-${dayRegular}T${
+        university.time || defaultTime
+      }-05:00`
+    );
+
+    // Check early decision date if it exists
+    let earlyDecisionPassed = false;
+    if (university.showEarly && university.notificationEarly) {
+      const [dayEarly, monthEarly, yearEarly] =
+        university.notificationEarly.split("-");
+      const targetDateEarly = new Date(
+        `20${yearEarly}-${monthEarly}-${dayEarly}T${
+          university.time || defaultTime
+        }-05:00`
+      );
+      earlyDecisionPassed = now > targetDateEarly;
+    }
+
+    return (
+      now > targetDateRegular && (!university.showEarly || earlyDecisionPassed)
     );
   };
 
@@ -330,61 +368,87 @@ export function UsaUniversityCountdown({
         <div className="bg-card p-8 rounded-lg shadow-md w-[90%] md:w-full max-w-4xl border border-border">
           {!showCountdown ? (
             <>
-              <h1 className="text-2xl font-bold mb-6 text-center">
+              <h1 className="text-2xl font-bold  text-center">
                 Select Your University
               </h1>
-              <div className="relative">
+              <div className="relative mt-4">
                 <div
                   className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4 max-h-[60vh] overflow-y-auto"
                   onScroll={handleScroll}
                 >
-                  {allUniversities.map((university) => (
-                    <Link
-                      href={`/${university.domain}`}
-                      className="w-full"
-                      key={university.name}
-                    >
-                      <button
+                  {allUniversities.map((university) => {
+                    const isPassed = hasDecisionPassed(university);
+                    return (
+                      <Link
+                        href={`/${university.domain}`}
+                        className="w-full"
                         key={university.name}
-                        onClick={() => {}}
-                        className={cn(
-                          "flex items-center space-x-2 p-2 rounded-lg border transition-colors w-full",
-                          "hover:bg-accent",
-                          selectedUniversity === university.name
-                            ? "border-primary bg-primary/10"
-                            : "border-border",
-                          isDecisionToday(university) &&
-                            "animate-pulse border-primary"
-                        )}
                       >
-                        <Avatar className="h-6 w-6">
-                          <Image
-                            src={
-                              university.fileExists
-                                ? `/logos/${university.domain}.jpg`
-                                : `https://logo.clearbit.com/${university.domain}`
-                            }
-                            alt={`${university.name} logo`}
-                            width={24}
-                            height={24}
-                            className="rounded-full bg-primary"
-                            loading="lazy"
-                          />
-                          <AvatarFallback>
-                            {university.name
-                              .split(" ")
-                              .map((word) => word[0])
-                              .join("")
-                              .slice(0, 2)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span className="text-sm truncate">
-                          {university.name}
-                          {isDecisionToday(university) && " 🎉"}
-                        </span>
-                      </button>
-                    </Link>
-                  ))}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              key={university.name}
+                              onClick={() => {}}
+                              className={cn(
+                                "flex items-center space-x-2 p-2 rounded-lg border transition-colors w-full",
+                                "hover:bg-accent",
+                                selectedUniversity === university.name
+                                  ? "border-primary bg-primary/10"
+                                  : "border-border",
+                                isDecisionToday(university) &&
+                                  "animate-pulse border-blue-500 border-dashed bg-blue-500/10",
+                                isPassed && "opacity-50 hover:opacity-75"
+                              )}
+                            >
+                              <Avatar className="h-6 w-6">
+                                <Image
+                                  src={
+                                    university.fileExists
+                                      ? `/logos/${university.domain}.jpg`
+                                      : `https://logo.clearbit.com/${university.domain}`
+                                  }
+                                  alt={`${university.name} logo`}
+                                  width={24}
+                                  height={24}
+                                  className={cn(
+                                    "rounded-full bg-primary",
+                                    isPassed && "grayscale"
+                                  )}
+                                  loading="lazy"
+                                />
+                                <AvatarFallback>
+                                  {university.name
+                                    .split(" ")
+                                    .map((word) => word[0])
+                                    .join("")
+                                    .slice(0, 2)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <span className="text-sm truncate">
+                                {university.name}
+                                {isDecisionToday(university) && " 🎉"}
+                                {isPassed && " (Passed)"}
+                              </span>
+                            </button>
+                          </TooltipTrigger>
+                          {isPassed && (
+                            <TooltipContent>
+                              <p>
+                                Decision date has passed on{" "}
+                                {university.notificationRegular}
+                              </p>
+                              {university.showEarly && (
+                                <p>
+                                  Early decision date:{" "}
+                                  {university.notificationEarly}
+                                </p>
+                              )}
+                            </TooltipContent>
+                          )}
+                        </Tooltip>
+                      </Link>
+                    );
+                  })}
 
                   <Dialog>
                     <DialogTrigger asChild>
