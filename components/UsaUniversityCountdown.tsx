@@ -373,7 +373,7 @@ export function UsaUniversityCountdown({
               </h1>
               <div className="relative mt-4">
                 <div
-                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4 max-h-[60vh] overflow-y-auto"
+                  className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4 max-h-[65vh] overflow-y-auto"
                   onScroll={handleScroll}
                 >
                   {allUniversities.map((university) => {
@@ -396,7 +396,7 @@ export function UsaUniversityCountdown({
                                   ? "border-primary bg-primary/10"
                                   : "border-border",
                                 isDecisionToday(university) &&
-                                  "animate-pulse border-blue-500 border-dashed bg-blue-500/10",
+                                  "border-blue-500 border-dashed bg-blue-500/10",
                                 isPassed &&
                                   "opacity-50 hover:opacity-75 border-dashed "
                               )}
