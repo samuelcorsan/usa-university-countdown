@@ -397,7 +397,8 @@ export function UsaUniversityCountdown({
                                   : "border-border",
                                 isDecisionToday(university) &&
                                   "animate-pulse border-blue-500 border-dashed bg-blue-500/10",
-                                isPassed && "opacity-50 hover:opacity-75"
+                                isPassed &&
+                                  "opacity-50 hover:opacity-75 border-dashed "
                               )}
                             >
                               <Avatar className="h-6 w-6">
