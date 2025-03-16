@@ -284,7 +284,62 @@ export function UsaUniversityCountdown({
     }
   };
 
-  const allUniversities = [...universities, ...customUniversities];
+  // Sort universities by release date and popularity
+  const sortUniversities = (universities: University[]) => {
+    const popularUniversities = [
+      "harvard.edu",
+      "stanford.edu",
+      "mit.edu",
+      "yale.edu",
+      "princeton.edu",
+      "columbia.edu",
+      "upenn.edu",
+      "cornell.edu",
+      "dartmouth.edu",
+      "brown.edu",
+      "berkeley.edu",
+      "ucla.edu",
+      "uchicago.edu",
+      "duke.edu",
+      "northwestern.edu",
+      "caltech.edu",
+    ];
+
+    return [...universities].sort((a, b) => {
+      const aIsPassed = hasDecisionPassed(a);
+      const bIsPassed = hasDecisionPassed(b);
+
+      // Move passed decisions to the end
+      if (aIsPassed && !bIsPassed) return 1;
+      if (!aIsPassed && bIsPassed) return -1;
+
+      // If both are passed or both are not passed, sort by popularity and date
+      const aPopularityIndex = popularUniversities.indexOf(a.domain);
+      const bPopularityIndex = popularUniversities.indexOf(b.domain);
+
+      // If both are popular universities
+      if (aPopularityIndex !== -1 && bPopularityIndex !== -1) {
+        return aPopularityIndex - bPopularityIndex;
+      }
+
+      // If only one is popular, prioritize it
+      if (aPopularityIndex !== -1) return -1;
+      if (bPopularityIndex !== -1) return 1;
+
+      // For non-popular universities, sort by date
+      const [dayA, monthA, yearA] = a.notificationRegular.split("-");
+      const [dayB, monthB, yearB] = b.notificationRegular.split("-");
+      const dateA = new Date(`20${yearA}-${monthA}-${dayA}`);
+      const dateB = new Date(`20${yearB}-${monthB}-${dayB}`);
+
+      return dateA.getTime() - dateB.getTime();
+    });
+  };
+
+  const allUniversities = sortUniversities([
+    ...universities,
+    ...customUniversities,
+  ]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const bottom =
