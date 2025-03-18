@@ -147,7 +147,7 @@ const universities = [
     name: "Amherst College",
     domain: "amherst.edu",
     notificationEarly: "12-12-24",
-    notificationRegular: "20-03-25",
+    notificationRegular: "21-03-25",
     time: "18:21",
     fileExists: true,
     notConfirmedDate: true,
