@@ -95,7 +95,7 @@ const universities = [
     domain: "nyu.edu",
     showEarly: true,
     notificationEarly: "13-02-25",
-    notificationRegular: "01-04-25",
+    notificationRegular: "26-03-25",
     time: "16:00",
     fileExists: true,
     notConfirmedDate: true,
