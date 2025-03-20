@@ -394,6 +394,14 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
   },
+  {
+    name: "Villanova University",
+    domain: "villanova.edu",
+    notificationRegular: "21-03-25",
+    time: "16:30",
+    fileExists: true,
+    notConfirmedDate: false,
+  },
 ] as University[];
 type University = {
   name: string;
