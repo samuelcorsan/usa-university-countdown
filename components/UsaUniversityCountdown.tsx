@@ -24,8 +24,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import universities from "@/universities";
-import { University } from "@/universities";
+import universities from "@/data/universities";
+import { University } from "@/data/universities";
 import { CalendarButtons } from "./CalendarButtons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import React from "react";

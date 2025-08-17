@@ -1,4 +1,4 @@
-import universities from "@/universities";
+import universities from "@/data/universities";
 
 export default async function sitemap() {
   const baseUrl = "https://collegedecision.us";

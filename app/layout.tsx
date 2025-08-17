@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import universities from "@/universities";
+import universities from "@/data/universities";
 import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
@@ -80,7 +80,6 @@ export const metadata: Metadata = {
     google: "cPoEeLVQ9rRKkbhtGjsfWJNWeFUYI7u_iudiKZNS1KI",
   },
   manifest: "/manifest.json",
-  themeColor: "#000000",
   alternates: {
     canonical: "https://collegedecision.us",
     languages: {
