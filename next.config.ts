@@ -35,7 +35,7 @@ const pwaConfig = withPWA({
         cacheName: "university-logos",
         expiration: {
           maxEntries: 50,
-          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+          maxAgeSeconds: 60 * 60 * 24 * 30,
         },
       },
     },

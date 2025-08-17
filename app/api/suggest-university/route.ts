@@ -3,7 +3,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { headers } from "next/headers";
 
 const limiter = rateLimit({
-  interval: 60 * 1000, // 1 minute
+  interval: 60 * 1000,
 });
 
 export async function POST(request: Request) {
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const ip = headersList.get("x-forwarded-for") || "unknown";
 
   try {
-    await limiter.check(5, ip); // 5 requests per minute per IP
+    await limiter.check(5, ip);
   } catch {
     return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
   }
@@ -26,7 +26,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Send to Discord webhook
     const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
     if (!webhookUrl) {
       throw new Error("Discord webhook URL not configured");
@@ -42,7 +41,7 @@ export async function POST(request: Request) {
           {
             title: "🎓 New University Suggestion",
             description: suggestion,
-            color: 0x4a90e2, // Nice blue color
+            color: 0x4a90e2,
             timestamp: new Date().toISOString(),
           },
         ],

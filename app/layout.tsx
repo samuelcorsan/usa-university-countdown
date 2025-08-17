@@ -119,7 +119,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Add this new jsonLd metadata
 export const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -129,7 +128,6 @@ export const jsonLd = {
   url: "https://collegedecision.us",
 };
 
-// Dynamically import service worker registration
 const SwRegister = dynamic(() => import("./sw-register"), {
   ssr: true,
 });

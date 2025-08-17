@@ -239,8 +239,8 @@ const universities = [
   {
     name: "Bowdoin College",
     domain: "bowdoin.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "21-03-25", // Late March 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "21-03-25",
     fileExists: true,
     notConfirmedDate: true,
   },

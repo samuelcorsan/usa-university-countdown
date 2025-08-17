@@ -18,7 +18,6 @@ export default async function Page(props: Props) {
     notFound();
   }
 
-  // Clean the domain parameter
   const cleanDomain = domain
     .replace(/^https?:\/\//, "")
     .replace(/^www\./, "")
@@ -35,14 +34,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   const domain = await params.domain;
 
-  // Clean the domain parameter
   const cleanDomain = domain
     .replace(/^https?:\/\//, "")
     .replace(/^www\./, "")
     .replace(/\/+$/, "")
     .trim();
 
-  // Find university data
   const university = universities.find(
     (uni) => uni.domain.toLowerCase() === cleanDomain.toLowerCase()
   );
@@ -58,7 +55,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     };
   }
   const universityAbbreviation = university.domain.split(".")[0];
-  // Generate university-specific keywords
   const keywords = [
     university.name,
     `${university.name} decision date`,
@@ -78,7 +74,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     "admission dates",
   ].join(", ");
 
-  // Get logo URL
   const logoUrl = university.fileExists
     ? `/logos/${university.domain}.jpg`
     : `https://logo.clearbit.com/${university.domain}`;
@@ -119,5 +114,5 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#000000", // Default theme color
+  themeColor: "#000000",
 };
