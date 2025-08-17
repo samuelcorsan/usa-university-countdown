@@ -1,7 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 export function Footer() {
+  const { theme } = useTheme();
+
+  const badgeTheme = theme === "dark" ? "dark" : "neutral";
+
   return (
     <footer className="mt-auto py-8 border-t border-border/50 bg-muted/30">
       <div className="max-w-7xl mx-auto px-6 relative">
@@ -12,7 +19,7 @@ export function Footer() {
           className="absolute -left-4 top-1/2 -translate-y-1/2"
         >
           <Image
-            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=819313&theme=neutral&t=1737822372083"
+            src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=819313&theme=${badgeTheme}&t=1737822372083`}
             alt="USA University Countdown - College application decision dates | Product Hunt"
             width={250}
             height={54}
