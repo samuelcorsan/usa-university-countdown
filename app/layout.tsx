@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { ModeToggle } from "@/components/theme-toggle";
 import { Analytics } from "@vercel/analytics/react";
 import dynamic from "next/dynamic";

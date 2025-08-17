@@ -13,48 +13,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
 
 interface UniversityCountdownProps {
   university: University;
   onBack: () => void;
 }
 
-const CountdownNumber = ({ value, isUrgent }: { value: number; isUrgent?: boolean }) => {
-  const displayValue = value.toString().padStart(2, "0");
-
-  return (
-    <div className="flex justify-center space-x-[1px]">
-      {displayValue.split("").map((digit, index) => (
-        <div
-          key={index}
-          className="relative h-[36px] w-[28px] overflow-hidden"
-        >
-          <div
-            className={cn(
-              "absolute w-full transition-transform duration-300 flex flex-col",
-              isUrgent && "text-destructive"
-            )}
-            style={{
-              transform: `translateY(-${parseInt(digit) * 36}px)`,
-            }}
-          >
-            {[...Array(10)].map((_, i) => (
-              <div
-                key={i}
-                className="h-[36px] flex items-center justify-center text-2xl font-bold"
-              >
-                {i}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+const TimeUnit = ({ value, label }: { value: number; label: string }) => (
+  <div className="text-center">
+    <div className="text-3xl font-bold text-foreground mb-1">
+      {value.toString().padStart(2, "0")}
     </div>
-  );
-};
+    <div className="text-sm text-muted-foreground font-medium">{label}</div>
+  </div>
+);
 
-export function UniversityCountdown({ university, onBack }: UniversityCountdownProps) {
+export function UniversityCountdown({
+  university,
+  onBack,
+}: UniversityCountdownProps) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -82,15 +59,6 @@ export function UniversityCountdown({ university, onBack }: UniversityCountdownP
     }
     return null;
   }, []);
-
-  const isTimeUrgent = (timeLeft: {
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-  }) => {
-    return timeLeft.days === 0 && timeLeft.hours === 0;
-  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -120,7 +88,7 @@ export function UniversityCountdown({ university, onBack }: UniversityCountdownP
       const [dayRegular, monthRegular, yearRegular] =
         university.notificationRegular.split("-");
       const targetDateRegular = new Date(
-        `20${yearRegular}-${monthRegular}-${dayRegular}T${
+        `20${yearRegular}-${monthRegular}-${yearRegular}T${
           university.time || defaultTime
         }-05:00`
       );
@@ -139,116 +107,120 @@ export function UniversityCountdown({ university, onBack }: UniversityCountdownP
 
   return (
     <>
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
-        <TooltipProvider>
-          <div className="text-center mb-12">
-            <Avatar className="h-24 w-24 mx-auto mb-6 ring-4 ring-primary/20 shadow-xl">
-              <AvatarImage
-                src={`/logos/${university.domain}.jpg`}
-                alt={`${university.name} logo`}
-              />
-              <AvatarFallback className="text-3xl font-bold">
-                {university.name
-                  .split(" ")
-                  .map((word) => word[0])
-                  .join("")
-                  .slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              {university.name}
-            </h1>
-            <Tooltip>
-              {university.notConfirmedDate && (
-                <TooltipTrigger>
-                  <Badge
-                    className="rounded-full text-sm px-4 py-2 bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/20 transition-colors"
-                    variant="secondary"
-                  >
-                    ⚠️ Dates not confirmed
-                  </Badge>
-                </TooltipTrigger>
-              )}
-              <TooltipContent>
-                <p>
-                  I have not confirmed the dates for this university yet. If
-                  you know the dates, please let me know so I can add them.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </TooltipProvider>
-
-        {university.showEarly && (
-          <section className="w-full max-w-4xl mb-12">
-            <h2 className="text-2xl font-bold mb-8 text-center text-blue-600">
-              Early Decision 2 Countdown
-            </h2>
-            <div className="grid grid-cols-4 gap-4 text-center">
-              {[
-                { value: timeLeft.days, label: "Days" },
-                { value: timeLeft.hours, label: "Hours" },
-                { value: timeLeft.minutes, label: "Minutes" },
-                { value: timeLeft.seconds, label: "Seconds" },
-              ].map(({ value, label }) => (
-                <div
-                  key={label}
-                  className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 p-6 rounded-2xl border border-blue-500/20 shadow-lg backdrop-blur-sm"
-                >
-                  <CountdownNumber
-                    value={value}
-                    isUrgent={isTimeUrgent(timeLeft)}
-                  />
-                  <div className="text-lg font-semibold text-blue-600 mt-3">
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        <section className="w-full max-w-4xl mb-12">
-          <h2 className="text-2xl font-bold mb-8 text-center text-foreground">
-            Regular Decision Countdown
-          </h2>
-          <div className="grid grid-cols-4 gap-4 text-center">
-            {[
-              { value: timeLeftRegular.days, label: "Days" },
-              { value: timeLeftRegular.hours, label: "Hours" },
-              { value: timeLeftRegular.minutes, label: "Minutes" },
-              { value: timeLeftRegular.seconds, label: "Seconds" },
-            ].map(({ value, label }) => (
-              <div
-                key={label}
-                className="bg-gradient-to-br from-primary/10 to-primary/20 p-6 rounded-2xl border border-primary/20 shadow-lg backdrop-blur-sm"
-              >
-                <CountdownNumber
-                  value={value}
-                  isUrgent={isTimeUrgent(timeLeftRegular)}
-                />
-                <div className="text-lg font-semibold text-primary mt-3">
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <div className="w-full max-w-4xl space-y-6">
-          <CalendarButtons
-            title={`${university.name} Regular`}
-            date={university.notificationRegular || ""}
-            time={university.time || ""}
-            className="w-full"
-          />
+      <div className="min-h-screen bg-background flex flex-col">
+        {/* Back Button - Top Left */}
+        <div className="absolute top-6 left-6 z-10">
           <Button
             onClick={onBack}
-            className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
-            size="lg"
+            size="default"
+            className="bg-black hover:bg-black/80 text-white border-black shadow-sm transition-all duration-200 hover:shadow-md px-4 py-2"
           >
-            ← Back to Selection
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Back
           </Button>
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
+          <TooltipProvider>
+            <div className="text-center mb-12">
+              <Avatar className="h-20 w-20 mx-auto mb-4 ring-2 ring-primary/20 shadow-lg">
+                <AvatarImage
+                  src={`/logos/${university.domain}.jpg`}
+                  alt={`${university.name} logo`}
+                />
+                <AvatarFallback className="text-2xl font-bold bg-primary/10 text-primary">
+                  {university.name
+                    .split(" ")
+                    .map((word) => word[0])
+                    .join("")
+                    .slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+                {university.name}
+              </h1>
+
+              <Tooltip>
+                {university.notConfirmedDate && (
+                  <TooltipTrigger>
+                    <Badge
+                      className="rounded-full text-xs px-3 py-1 bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/20 transition-colors"
+                      variant="secondary"
+                    >
+                      ⚠️ Dates not confirmed
+                    </Badge>
+                  </TooltipTrigger>
+                )}
+                <TooltipContent>
+                  <p>
+                    I have not confirmed the dates for this university yet. If
+                    you know the dates, please let me know so I can add them.
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </TooltipProvider>
+
+          <div className="w-full max-w-4xl space-y-8">
+            {university.showEarly && (
+              <div className="bg-gradient-to-r from-blue-50 to-blue-100/30 rounded-2xl p-8 border border-blue-200/30">
+                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700">
+                  Early Decision 2 Countdown
+                </h2>
+                <div className="grid grid-cols-4 gap-8">
+                  <TimeUnit value={timeLeft.days} label="Days" />
+                  <TimeUnit value={timeLeft.hours} label="Hours" />
+                  <TimeUnit value={timeLeft.minutes} label="Minutes" />
+                  <TimeUnit value={timeLeft.seconds} label="Seconds" />
+                </div>
+              </div>
+            )}
+
+            <div className="bg-gradient-to-r from-muted/30 to-muted/50 rounded-2xl p-8 border border-border/30">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-foreground">
+                Regular Decision Countdown
+              </h2>
+              <div className="grid grid-cols-4 gap-8">
+                <TimeUnit value={timeLeftRegular.days} label="Days" />
+                <TimeUnit value={timeLeftRegular.hours} label="Hours" />
+                <TimeUnit value={timeLeftRegular.minutes} label="Minutes" />
+                <TimeUnit value={timeLeftRegular.seconds} label="Seconds" />
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full max-w-2xl space-y-6 mt-8">
+            <div className="bg-white rounded-2xl p-8 border-2 border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  Add to Calendar
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Get notified when {university.name} releases decisions
+                </p>
+              </div>
+              <CalendarButtons
+                title={`${university.name} Regular Decision`}
+                date={university.notificationRegular || ""}
+                time={university.time || ""}
+                className="w-full"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
