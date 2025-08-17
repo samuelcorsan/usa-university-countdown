@@ -113,7 +113,7 @@ export function UniversityCountdown({
           <Button
             onClick={onBack}
             size="default"
-            className="bg-black hover:bg-black/80 text-white border-black shadow-sm transition-all duration-200 hover:shadow-md px-4 py-2"
+            className="bg-secondary hover:bg-secondary/80 text-secondary-foreground border-secondary shadow-sm transition-all duration-200 hover:shadow-md px-4 py-2"
           >
             <svg
               className="w-5 h-5 mr-2"
@@ -177,8 +177,8 @@ export function UniversityCountdown({
 
           <div className="w-full max-w-4xl space-y-8">
             {university.showEarly && (
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100/30 rounded-2xl p-8 border border-blue-200/30">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700">
+              <div className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 dark:from-blue-400/20 dark:to-blue-500/20 rounded-2xl p-8 border border-blue-200/30 dark:border-blue-700/30">
+                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700 dark:text-blue-300">
                   Early Decision 2 Countdown
                 </h2>
                 <div className="grid grid-cols-4 gap-8">
@@ -190,7 +190,7 @@ export function UniversityCountdown({
               </div>
             )}
 
-            <div className="bg-gradient-to-r from-muted/30 to-muted/50 rounded-2xl p-8 border border-border/30">
+            <div className="bg-gradient-to-r from-muted/30 to-muted/50 dark:from-muted/20 dark:to-muted/40 rounded-2xl p-8 border border-border/30">
               <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-foreground">
                 Regular Decision Countdown
               </h2>
@@ -204,12 +204,12 @@ export function UniversityCountdown({
           </div>
 
           <div className="w-full max-w-2xl space-y-6 mt-8">
-            <div className="bg-white rounded-2xl p-8 border-2 border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="bg-card rounded-2xl p-8 border-2 border-border shadow-sm hover:shadow-md transition-all duration-300">
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                <h3 className="text-xl font-bold text-card-foreground mb-2">
                   Add to Calendar
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-muted-foreground">
                   Get notified when {university.name} releases decisions
                 </p>
               </div>
