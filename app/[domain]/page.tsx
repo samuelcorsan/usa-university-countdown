@@ -88,11 +88,20 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       url: `https://collegedecision.us/${cleanDomain}`,
       type: "website",
       siteName: "USA University Countdown",
+      images: [
+        {
+          url: `/api/og?domain=${cleanDomain}`,
+          width: 1200,
+          height: 630,
+          alt: `${university.name} Decision Date Countdown`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${university.name} Decision Date Countdown`,
       description: `Track ${university.name}'s college application decision dates and notifications.`,
+      images: [`/api/og?domain=${cleanDomain}`],
     },
     icons: {
       icon: logoUrl,
