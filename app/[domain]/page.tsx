@@ -1,4 +1,4 @@
-import { UsaUniversityCountdown } from "@/components/UsaUniversityCountdown";
+import { UsaUniversityCountdown } from "@/components/usa-university-countdown";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import universities from "@/data/universities";
