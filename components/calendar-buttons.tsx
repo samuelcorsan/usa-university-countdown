@@ -77,6 +77,7 @@ END:VCALENDAR`;
             alt="Google Calendar"
             width={16}
             height={16}
+            className="w-4 h-4"
           />
           Google Calendar
         </a>
@@ -98,6 +99,7 @@ END:VCALENDAR`;
             alt="Outlook Calendar"
             width={16}
             height={16}
+            className="w-4 h-4"
           />
           Outlook Calendar
         </a>
@@ -120,6 +122,7 @@ END:VCALENDAR`;
             alt="Apple Calendar"
             width={16}
             height={16}
+            className="w-4 h-4"
           />
           Apple Calendar
         </a>

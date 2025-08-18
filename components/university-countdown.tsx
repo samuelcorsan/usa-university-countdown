@@ -108,7 +108,6 @@ export function UniversityCountdown({
   return (
     <>
       <div className="min-h-screen bg-background flex flex-col">
-        {/* Back Button - Top Left */}
         <div className="absolute top-6 left-6 z-10">
           <Button
             onClick={onBack}

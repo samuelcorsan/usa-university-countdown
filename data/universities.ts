@@ -7,6 +7,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#A41034", to: "#5B0B1F" },
   },
   {
     name: "Stanford University",
@@ -16,6 +17,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#8C1515", to: "#2E2D29" },
   },
   {
     name: "Massachusetts Institute of Technology",
@@ -25,6 +27,7 @@ const universities = [
     time: "18:28",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#A31F34", to: "#8A8B8C" },
   },
   {
     name: "California Institute of Technology",
@@ -34,6 +37,7 @@ const universities = [
     time: "14:22",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#FF6C0C", to: "#333F48" },
   },
   {
     name: "Columbia University",
@@ -43,6 +47,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#9DD6EB", to: "#1F6F8B" },
   },
   {
     name: "Princeton University",
@@ -52,6 +57,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#E77500", to: "#000000" },
   },
   {
     name: "Yale University",
@@ -61,6 +67,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#00356B", to: "#6FA8DC" },
   },
   {
     name: "Cornell University",
@@ -70,6 +77,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#B31B1B", to: "#2B2B2B" },
   },
   {
     name: "University of Pennsylvania",
@@ -79,6 +87,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#011F5B", to: "#990000" },
   },
   {
     name: "Johns Hopkins University",
@@ -89,6 +98,7 @@ const universities = [
     time: "15:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#0066CC", to: "#000000" },
   },
   {
     name: "New York University",
@@ -99,6 +109,7 @@ const universities = [
     time: "16:00",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#57068C", to: "#B19CD9" },
   },
   {
     name: "Northwestern University",
@@ -107,6 +118,7 @@ const universities = [
     notificationRegular: "26-03-25",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#4E2A84", to: "#8360A6" },
   },
   {
     name: "Duke University",
@@ -115,6 +127,7 @@ const universities = [
     notificationRegular: "27-03-25",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#001A57", to: "#5AA9E6" },
   },
   {
     name: "Dartmouth College",
@@ -124,6 +137,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#00693E", to: "#00A86B" },
   },
   {
     name: "Brown University",
@@ -133,6 +147,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#4E3629", to: "#B31F2D" },
   },
   {
     name: "Pomona College",
@@ -142,6 +157,7 @@ const universities = [
     time: "20:00",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#0055A2", to: "#FF7F50" },
   },
   {
     name: "Amherst College",
@@ -151,6 +167,7 @@ const universities = [
     time: "18:21",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#46166B", to: "#8E70A1" },
   },
   {
     name: "University of North Carolina at Chapel Hill",
@@ -160,6 +177,7 @@ const universities = [
     time: "16:00",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#7BAFD4", to: "#13294B" },
   },
   {
     name: "University of Notre Dame",
@@ -169,6 +187,7 @@ const universities = [
     time: "18:42",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#0C2340", to: "#AE9142" },
   },
   {
     name: "Williams College",
@@ -178,6 +197,7 @@ const universities = [
     time: "18:30",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#542583", to: "#E5B700" },
   },
   {
     name: "University of California, Berkeley",
@@ -186,6 +206,7 @@ const universities = [
     notificationRegular: "27-03-25",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#003262", to: "#FDB515" },
   },
   {
     name: "University of California, Los Angeles",
@@ -194,6 +215,7 @@ const universities = [
     notificationRegular: "21-03-25",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#2774AE", to: "#FFD100" },
   },
   {
     name: "University of California, San Diego",
@@ -202,6 +224,7 @@ const universities = [
     notificationRegular: "14-03-25",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#00629B", to: "#FFC72C" },
   },
   {
     name: "University of California, Irvine",
@@ -210,6 +233,7 @@ const universities = [
     notificationRegular: "14-03-25",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#0C2340", to: "#FFCD00" },
   },
   {
     name: "University of California, Santa Barbara",
@@ -218,14 +242,16 @@ const universities = [
     notificationRegular: "28-03-25",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#003660", to: "#FFD200" },
   },
   {
     name: "University of California, Davis",
     domain: "ucdavis.edu",
-    notificationEarly: "12-12-24", // Mid-December 2024
-    notificationRegular: "18-03-25", // Late March 2025
+    notificationEarly: "12-12-24",
+    notificationRegular: "18-03-25",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#002855", to: "#B3A369" },
   },
   {
     name: "Middlebury College",
@@ -235,6 +261,7 @@ const universities = [
     time: "08:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#00205B", to: "#65AEDD" },
   },
   {
     name: "Bowdoin College",
@@ -243,6 +270,7 @@ const universities = [
     notificationRegular: "21-03-25",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#000000", to: "#666666" },
   },
   {
     name: "Washington University in St. Louis",
@@ -253,6 +281,7 @@ const universities = [
     time: "17:30",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#006C5B", to: "#A32134" },
   },
   {
     name: "Vanderbilt University",
@@ -262,6 +291,7 @@ const universities = [
     time: "18:00",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#000000", to: "#B3A369" },
   },
   {
     name: "University of Chicago",
@@ -272,6 +302,7 @@ const universities = [
     time: "19:00",
     notConfirmedDate: false,
     fileExists: true,
+    gradient: { from: "#800000", to: "#555555" },
   },
   {
     name: "Rice University",
@@ -281,6 +312,7 @@ const universities = [
     time: "18:00",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#00205B", to: "#5D5E60" },
   },
   {
     name: "Carnegie Mellon University",
@@ -290,6 +322,7 @@ const universities = [
     time: "16:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#CC0000", to: "#3D3D3D" },
   },
   {
     name: "Emory University",
@@ -299,6 +332,7 @@ const universities = [
     time: "18:00",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#002878", to: "#F2A900" },
   },
   {
     name: "Georgetown University",
@@ -308,6 +342,7 @@ const universities = [
     time: "17:50",
     fileExists: true,
     notConfirmedDate: true,
+    gradient: { from: "#041E42", to: "#9EA2A2" },
   },
   {
     name: "University of Southern California",
@@ -317,6 +352,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#990000", to: "#FFCC00" },
   },
   {
     name: "University of Michigan",
@@ -326,6 +362,7 @@ const universities = [
     time: "15:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#00274C", to: "#FFCB05" },
   },
   {
     name: "Boston College",
@@ -335,6 +372,7 @@ const universities = [
     time: "18:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#8A100B", to: "#B6A268" },
   },
   {
     name: "Case Western Reserve University",
@@ -344,6 +382,7 @@ const universities = [
     time: "15:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#1C4E80", to: "#A3B3C7" },
   },
   {
     name: "Barnard College",
@@ -353,6 +392,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#1C4F8F", to: "#74A7CF" },
   },
   {
     name: "University of Texas at Austin",
@@ -361,6 +401,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#BF5700", to: "#333F48" },
   },
   {
     name: "University of Miami (UMiami)",
@@ -369,6 +410,7 @@ const universities = [
     time: "19:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#F47321", to: "#005030" },
   },
   {
     name: "Harvey Mudd College",
@@ -377,6 +419,7 @@ const universities = [
     time: "15:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#FFBD00", to: "#4D4F53" },
   },
   {
     name: "Colgate University",
@@ -385,6 +428,7 @@ const universities = [
     time: "15:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#841617", to: "#808080" },
   },
   {
     name: "Georgia Tech",
@@ -393,6 +437,7 @@ const universities = [
     time: "15:00",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#003057", to: "#B3A369" },
   },
   {
     name: "Villanova University",
@@ -401,8 +446,10 @@ const universities = [
     time: "16:30",
     fileExists: true,
     notConfirmedDate: false,
+    gradient: { from: "#003366", to: "#8DB3E2" },
   },
 ] as University[];
+
 type University = {
   name: string;
   domain: string;
@@ -412,6 +459,7 @@ type University = {
   fileExists: boolean;
   notConfirmedDate?: boolean;
   time?: string;
+  gradient: { from: string; to: string };
 };
 export default universities;
 export type { University };

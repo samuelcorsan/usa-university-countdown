@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import universities from "@/data/universities";
 import { University } from "@/data/universities";
 import { UniversityCard } from "./university-card";
@@ -19,6 +19,23 @@ export function UniversitySelection({
   customUniversities,
   setCustomUniversities,
 }: UniversitySelectionProps) {
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (scrollTop + windowHeight >= documentHeight - 100) {
+        setShowScrollIndicator(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const sortedUniversities = useMemo(() => {
     const popularUniversities = [
       "harvard.edu",
@@ -130,6 +147,17 @@ export function UniversitySelection({
             setCustomUniversities={setCustomUniversities}
           />
         </div>
+
+        {showScrollIndicator && (
+          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
+            <div className="bg-background/90 backdrop-blur-sm border border-border rounded-full px-4 py-2 shadow-lg">
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <span>Scroll for more universities</span>
+                <span className="animate-bounce text-lg">↓</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <Footer />
