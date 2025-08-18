@@ -37,25 +37,6 @@ export function UniversitySelection({
   }, []);
 
   const sortedUniversities = useMemo(() => {
-    const popularUniversities = [
-      "harvard.edu",
-      "stanford.edu",
-      "mit.edu",
-      "yale.edu",
-      "princeton.edu",
-      "columbia.edu",
-      "upenn.edu",
-      "cornell.edu",
-      "dartmouth.edu",
-      "brown.edu",
-      "berkeley.edu",
-      "ucla.edu",
-      "uchicago.edu",
-      "duke.edu",
-      "northwestern.edu",
-      "caltech.edu",
-    ];
-
     return [...universities, ...customUniversities].sort((a, b) => {
       const now = new Date();
       const defaultTime = "19:00:00";
@@ -86,7 +67,7 @@ export function UniversitySelection({
       const [dayRegularB, monthRegularB, yearRegularB] =
         b.notificationRegular.split("-");
       const targetDateRegularB = new Date(
-        `20${yearRegularB}-${monthRegularB}-${dayRegularB}T${
+        `20${yearRegularB}-${monthRegularB}-${yearRegularB}T${
           b.time || defaultTime
         }-05:00`
       );
@@ -96,7 +77,7 @@ export function UniversitySelection({
         const [dayEarlyB, monthEarlyB, yearEarlyB] =
           b.notificationEarly.split("-");
         const targetDateEarlyB = new Date(
-          `20${yearEarlyB}-${monthEarlyB}-${dayEarlyB}T${
+          `20${yearEarlyB}-${monthEarlyB}-${yearEarlyB}T${
             b.time || defaultTime
           }-05:00`
         );
@@ -109,15 +90,18 @@ export function UniversitySelection({
       if (aIsPassed && !bIsPassed) return 1;
       if (!aIsPassed && bIsPassed) return -1;
 
-      const aPopularityIndex = popularUniversities.indexOf(a.domain);
-      const bPopularityIndex = popularUniversities.indexOf(b.domain);
+      const aPriority = a.priority ?? Number.MAX_SAFE_INTEGER;
+      const bPriority = b.priority ?? Number.MAX_SAFE_INTEGER;
 
-      if (aPopularityIndex !== -1 && bPopularityIndex !== -1) {
-        return aPopularityIndex - bPopularityIndex;
+      if (
+        aPriority !== Number.MAX_SAFE_INTEGER &&
+        bPriority !== Number.MAX_SAFE_INTEGER
+      ) {
+        return aPriority - bPriority;
       }
 
-      if (aPopularityIndex !== -1) return -1;
-      if (bPopularityIndex !== -1) return 1;
+      if (aPriority !== Number.MAX_SAFE_INTEGER) return -1;
+      if (bPriority !== Number.MAX_SAFE_INTEGER) return 1;
 
       const [dayA, monthA, yearA] = a.notificationRegular.split("-");
       const [dayB, monthB, yearB] = b.notificationRegular.split("-");

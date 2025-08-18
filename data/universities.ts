@@ -8,6 +8,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#A41034", to: "#5B0B1F" },
+    priority: 1,
   },
   {
     name: "Stanford University",
@@ -18,6 +19,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#8C1515", to: "#2E2D29" },
+    priority: 2,
   },
   {
     name: "Massachusetts Institute of Technology",
@@ -28,6 +30,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#A31F34", to: "#8A8B8C" },
+    priority: 3,
   },
   {
     name: "California Institute of Technology",
@@ -38,6 +41,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#FF6C0C", to: "#333F48" },
+    priority: 16,
   },
   {
     name: "Columbia University",
@@ -48,6 +52,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#9DD6EB", to: "#1F6F8B" },
+    priority: 6,
   },
   {
     name: "Princeton University",
@@ -58,6 +63,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#E77500", to: "#000000" },
+    priority: 5,
   },
   {
     name: "Yale University",
@@ -68,6 +74,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#00356B", to: "#6FA8DC" },
+    priority: 4,
   },
   {
     name: "Cornell University",
@@ -78,6 +85,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#B31B1B", to: "#2B2B2B" },
+    priority: 8,
   },
   {
     name: "University of Pennsylvania",
@@ -88,6 +96,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#011F5B", to: "#990000" },
+    priority: 7,
   },
   {
     name: "Johns Hopkins University",
@@ -119,6 +128,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#4E2A84", to: "#8360A6" },
+    priority: 15,
   },
   {
     name: "Duke University",
@@ -128,6 +138,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: true,
     gradient: { from: "#001A57", to: "#5AA9E6" },
+    priority: 14,
   },
   {
     name: "Dartmouth College",
@@ -138,6 +149,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#00693E", to: "#00A86B" },
+    priority: 9,
   },
   {
     name: "Brown University",
@@ -148,6 +160,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#4E3629", to: "#B31F2D" },
+    priority: 10,
   },
   {
     name: "Pomona College",
@@ -207,6 +220,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: false,
     gradient: { from: "#003262", to: "#FDB515" },
+    priority: 11,
   },
   {
     name: "University of California, Los Angeles",
@@ -216,6 +230,7 @@ const universities = [
     fileExists: true,
     notConfirmedDate: true,
     gradient: { from: "#2774AE", to: "#FFD100" },
+    priority: 12,
   },
   {
     name: "University of California, San Diego",
@@ -303,6 +318,7 @@ const universities = [
     notConfirmedDate: false,
     fileExists: true,
     gradient: { from: "#800000", to: "#555555" },
+    priority: 13,
   },
   {
     name: "Rice University",
@@ -460,6 +476,7 @@ type University = {
   notConfirmedDate?: boolean;
   time?: string;
   gradient: { from: string; to: string };
+  priority?: number;
 };
 export default universities;
 export type { University };
