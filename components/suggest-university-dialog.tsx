@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { University } from "@/data/universities";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,15 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 
-interface SuggestUniversityDialogProps {
-  customUniversities: University[];
-  setCustomUniversities: (universities: University[]) => void;
-}
-
-export function SuggestUniversityDialog({
-  customUniversities,
-  setCustomUniversities,
-}: SuggestUniversityDialogProps) {
+export function SuggestUniversityDialog() {
   const [suggestion, setSuggestion] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dialogCloseRef = useRef<HTMLButtonElement>(null);

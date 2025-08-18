@@ -11,13 +11,11 @@ import { Footer } from "./footer";
 interface UniversitySelectionProps {
   onUniversitySelect: (universityName: string) => void;
   customUniversities: University[];
-  setCustomUniversities: (universities: University[]) => void;
 }
 
 export function UniversitySelection({
   onUniversitySelect,
   customUniversities,
-  setCustomUniversities,
 }: UniversitySelectionProps) {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
@@ -64,8 +62,7 @@ export function UniversitySelection({
       const aIsPassed =
         now > targetDateRegularA && (!a.showEarly || earlyDecisionPassedA);
 
-      const [dayRegularB, monthRegularB, yearRegularB] =
-        b.notificationRegular.split("-");
+      const [monthRegularB, yearRegularB] = b.notificationRegular.split("-");
       const targetDateRegularB = new Date(
         `20${yearRegularB}-${monthRegularB}-${yearRegularB}T${
           b.time || defaultTime
@@ -74,8 +71,7 @@ export function UniversitySelection({
 
       let earlyDecisionPassedB = false;
       if (b.showEarly && b.notificationEarly) {
-        const [dayEarlyB, monthEarlyB, yearEarlyB] =
-          b.notificationEarly.split("-");
+        const [monthEarlyB, yearEarlyB] = b.notificationEarly.split("-");
         const targetDateEarlyB = new Date(
           `20${yearEarlyB}-${monthEarlyB}-${yearEarlyB}T${
             b.time || defaultTime
@@ -126,10 +122,7 @@ export function UniversitySelection({
             />
           ))}
 
-          <SuggestUniversityDialog
-            customUniversities={customUniversities}
-            setCustomUniversities={setCustomUniversities}
-          />
+          <SuggestUniversityDialog />
         </div>
 
         {showScrollIndicator && (

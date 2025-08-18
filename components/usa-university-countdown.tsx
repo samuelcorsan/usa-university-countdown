@@ -83,7 +83,6 @@ export function UsaUniversityCountdown({
             setShowCountdown(true);
           }}
           customUniversities={customUniversities}
-          setCustomUniversities={setCustomUniversities}
         />
       ) : (
         <UniversityCountdown

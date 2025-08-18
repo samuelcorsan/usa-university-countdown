@@ -85,7 +85,7 @@ export function UniversityCountdown({
         }
       }
 
-      const [dayRegular, monthRegular, yearRegular] =
+      const [monthRegular, yearRegular] =
         university.notificationRegular.split("-");
       const targetDateRegular = new Date(
         `20${yearRegular}-${monthRegular}-${yearRegular}T${
