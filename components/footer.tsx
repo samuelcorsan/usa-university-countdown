@@ -1,32 +1,9 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 
 export function Footer() {
-  const { theme } = useTheme();
-
-  const badgeTheme = theme === "dark" ? "dark" : "neutral";
-
   return (
-    <footer className="mt-auto py-6 sm:py-8 border-t border-border/50 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-        <Link
-          href="https://www.producthunt.com/posts/usa-university-countdown?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-usa&#0045;university&#0045;countdown"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute left-0 sm:-left-4 top-1/2 -translate-y-1/2 hidden sm:block"
-        >
-          <Image
-            src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=819313&theme=${badgeTheme}&t=1737822372083`}
-            alt="USA University Countdown - College application decision dates | Product Hunt"
-            width={250}
-            height={54}
-            unoptimized
-            className="w-48 sm:w-60 lg:w-64"
-          />
-        </Link>
+    <footer className="mt-4 py-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center gap-3 text-center">
           <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base">
             <span>Made with</span>

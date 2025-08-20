@@ -39,8 +39,8 @@ export function UniversitySelection({
       const now = new Date();
       const defaultTime = "19:00:00";
 
-      const [dayRegularA, monthRegularA, yearRegularA] =
-        a.notificationRegular.split("-");
+      const [monthRegularA, dayRegularA, yearRegularA] =
+        a.applicationRegular.split("-");
       const targetDateRegularA = new Date(
         `20${yearRegularA}-${monthRegularA}-${dayRegularA}T${
           a.time || defaultTime
@@ -48,9 +48,9 @@ export function UniversitySelection({
       );
 
       let earlyDecisionPassedA = false;
-      if (a.showEarly && a.notificationEarly) {
-        const [dayEarlyA, monthEarlyA, yearEarlyA] =
-          a.notificationEarly.split("-");
+      if (a.showEarly && a.applicationEarly) {
+        const [monthEarlyA, dayEarlyA, yearEarlyA] =
+          a.applicationEarly.split("-");
         const targetDateEarlyA = new Date(
           `20${yearEarlyA}-${monthEarlyA}-${dayEarlyA}T${
             a.time || defaultTime
@@ -62,18 +62,20 @@ export function UniversitySelection({
       const aIsPassed =
         now > targetDateRegularA && (!a.showEarly || earlyDecisionPassedA);
 
-      const [monthRegularB, yearRegularB] = b.notificationRegular.split("-");
+      const [monthRegularB, dayRegularB, yearRegularB] =
+        b.applicationRegular.split("-");
       const targetDateRegularB = new Date(
-        `20${yearRegularB}-${monthRegularB}-${yearRegularB}T${
+        `20${yearRegularB}-${monthRegularB}-${dayRegularB}T${
           b.time || defaultTime
         }-05:00`
       );
 
       let earlyDecisionPassedB = false;
-      if (b.showEarly && b.notificationEarly) {
-        const [monthEarlyB, yearEarlyB] = b.notificationEarly.split("-");
+      if (b.showEarly && b.applicationEarly) {
+        const [monthEarlyB, dayEarlyB, yearEarlyB] =
+          b.applicationEarly.split("-");
         const targetDateEarlyB = new Date(
-          `20${yearEarlyB}-${monthEarlyB}-${yearEarlyB}T${
+          `20${yearEarlyB}-${monthEarlyB}-${dayEarlyB}T${
             b.time || defaultTime
           }-05:00`
         );
@@ -99,10 +101,12 @@ export function UniversitySelection({
       if (aPriority !== Number.MAX_SAFE_INTEGER) return -1;
       if (bPriority !== Number.MAX_SAFE_INTEGER) return 1;
 
-      const [dayA, monthA, yearA] = a.notificationRegular.split("-");
-      const [dayB, monthB, yearB] = b.notificationRegular.split("-");
-      const dateA = new Date(`20${yearA}-${monthA}-${dayA}`);
-      const dateB = new Date(`20${yearB}-${monthB}-${dayB}`);
+      const dateA = new Date(
+        `20${yearRegularA}-${monthRegularA}-${dayRegularA}`
+      );
+      const dateB = new Date(
+        `20${yearRegularB}-${monthRegularB}-${dayRegularB}`
+      );
 
       return dateA.getTime() - dateB.getTime();
     });

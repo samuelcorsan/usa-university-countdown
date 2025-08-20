@@ -44,6 +44,18 @@ export function UniversityCountdown({
     minutes: 0,
     seconds: 0,
   });
+  const [timeLeftApplicationEarly, setTimeLeftApplicationEarly] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  const [timeLeftApplicationRegular, setTimeLeftApplicationRegular] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   const calculateTimeLeft = useCallback((targetDate: Date) => {
     const now = new Date();
@@ -65,8 +77,9 @@ export function UniversityCountdown({
       const now = new Date();
       const defaultTime = "19:00:00";
 
+      // Parse notification dates (mm-dd-yy format)
       if (university.showEarly) {
-        const [dayEarly, monthEarly, yearEarly] =
+        const [monthEarly, dayEarly, yearEarly] =
           university.notificationEarly.split("-");
         const targetDateEarly = new Date(
           `20${yearEarly}-${monthEarly}-${dayEarly}T${
@@ -85,10 +98,10 @@ export function UniversityCountdown({
         }
       }
 
-      const [monthRegular, yearRegular] =
+      const [monthRegular, dayRegular, yearRegular] =
         university.notificationRegular.split("-");
       const targetDateRegular = new Date(
-        `20${yearRegular}-${monthRegular}-${yearRegular}T${
+        `20${yearRegular}-${monthRegular}-${dayRegular}T${
           university.time || defaultTime
         }-05:00`
       );
@@ -100,6 +113,41 @@ export function UniversityCountdown({
           setTimeLeftRegular(timeLeft);
         }
       }
+
+      // Parse application dates (mm-dd-yy format)
+      if (university.applicationEarly) {
+        const [monthEarly, dayEarly, yearEarly] =
+          university.applicationEarly.split("-");
+        const targetDateApplicationEarly = new Date(
+          `20${yearEarly}-${monthEarly}-${dayEarly}T${defaultTime}-05:00`
+        );
+        const differenceApplicationEarly =
+          targetDateApplicationEarly.getTime() - now.getTime();
+
+        if (differenceApplicationEarly > 0) {
+          const timeLeft = calculateTimeLeft(targetDateApplicationEarly);
+          if (timeLeft) {
+            setTimeLeftApplicationEarly(timeLeft);
+          }
+        }
+      }
+
+      if (university.applicationRegular) {
+        const [monthRegular, dayRegular, yearRegular] =
+          university.applicationRegular.split("-");
+        const targetDateApplicationRegular = new Date(
+          `20${yearRegular}-${monthRegular}-${dayRegular}T${defaultTime}-05:00`
+        );
+        const differenceApplicationRegular =
+          targetDateApplicationRegular.getTime() - now.getTime();
+
+        if (differenceApplicationRegular > 0) {
+          const timeLeft = calculateTimeLeft(targetDateApplicationRegular);
+          if (timeLeft) {
+            setTimeLeftApplicationRegular(timeLeft);
+          }
+        }
+      }
     }, 500);
 
     return () => clearInterval(timer);
@@ -107,7 +155,7 @@ export function UniversityCountdown({
 
   return (
     <>
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="bg-background flex flex-col">
         <div className="absolute top-6 left-6 z-10">
           <Button
             onClick={onBack}
@@ -134,8 +182,8 @@ export function UniversityCountdown({
 
         <div className="flex-1 flex flex-col items-center justify-center px-6 py-8">
           <TooltipProvider>
-            <div className="text-center mb-12">
-              <Avatar className="h-20 w-20 mx-auto mb-4 ring-2 ring-primary/20 shadow-lg">
+            <div className="text-center mb-4">
+              <Avatar className="h-24 w-24 mx-auto mb-4 ring-2 ring-primary/20 shadow-lg">
                 <AvatarImage
                   src={`/logos/${university.domain}.jpg`}
                   alt={`${university.name} logo`}
@@ -149,7 +197,7 @@ export function UniversityCountdown({
                 </AvatarFallback>
               </Avatar>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
                 {university.name}
               </h1>
 
@@ -166,8 +214,9 @@ export function UniversityCountdown({
                 )}
                 <TooltipContent>
                   <p>
-                    I have not confirmed the dates for this university yet. If
-                    you know the dates, please let me know so I can add them.
+                    I have not confirmed the application deadline dates for this
+                    university yet. If you know the dates, please let me know so
+                    I can add them.
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -175,47 +224,71 @@ export function UniversityCountdown({
           </TooltipProvider>
 
           <div className="w-full max-w-4xl space-y-8">
-            {university.showEarly && (
-              <div className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 dark:from-blue-400/20 dark:to-blue-500/20 rounded-2xl p-8 border border-blue-200/30 dark:border-blue-700/30">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700 dark:text-blue-300">
-                  Early Decision 2 Countdown
-                </h2>
-                <div className="grid grid-cols-4 gap-8">
-                  <TimeUnit value={timeLeft.days} label="Days" />
-                  <TimeUnit value={timeLeft.hours} label="Hours" />
-                  <TimeUnit value={timeLeft.minutes} label="Minutes" />
-                  <TimeUnit value={timeLeft.seconds} label="Seconds" />
+            {/* Application Deadlines */}
+            <div className="rounded-2xl p-8">
+              {university.applicationEarly && (
+                <div className="mb-8">
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-foreground">
+                    Early Application Deadline
+                  </h2>
+                  <div className="grid grid-cols-4 gap-8">
+                    <TimeUnit
+                      value={timeLeftApplicationEarly.days}
+                      label="Days"
+                    />
+                    <TimeUnit
+                      value={timeLeftApplicationEarly.hours}
+                      label="Hours"
+                    />
+                    <TimeUnit
+                      value={timeLeftApplicationEarly.minutes}
+                      label="Minutes"
+                    />
+                    <TimeUnit
+                      value={timeLeftApplicationEarly.seconds}
+                      label="Seconds"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            <div className="bg-gradient-to-r from-muted/30 to-muted/50 dark:from-muted/20 dark:to-muted/40 rounded-2xl p-8 border border-border/30">
-              <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-foreground">
-                Regular Decision Countdown
-              </h2>
-              <div className="grid grid-cols-4 gap-8">
-                <TimeUnit value={timeLeftRegular.days} label="Days" />
-                <TimeUnit value={timeLeftRegular.hours} label="Hours" />
-                <TimeUnit value={timeLeftRegular.minutes} label="Minutes" />
-                <TimeUnit value={timeLeftRegular.seconds} label="Seconds" />
-              </div>
+              {university.applicationRegular && (
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-center text-foreground">
+                    Regular Application Deadline
+                  </h2>
+                  <div className="grid grid-cols-4 gap-8">
+                    <TimeUnit
+                      value={timeLeftApplicationRegular.days}
+                      label="Days"
+                    />
+                    <TimeUnit
+                      value={timeLeftApplicationRegular.hours}
+                      label="Hours"
+                    />
+                    <TimeUnit
+                      value={timeLeftApplicationRegular.minutes}
+                      label="Minutes"
+                    />
+                    <TimeUnit
+                      value={timeLeftApplicationRegular.seconds}
+                      label="Seconds"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="w-full max-w-2xl space-y-6 mt-8">
-            <div className="bg-card rounded-2xl p-8 border-2 border-border shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-card-foreground mb-2">
-                  Add to Calendar
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Get notified when {university.name} releases decisions
-                </p>
-              </div>
+          <div className="w-full max-w-4xl space-y-6 mt-12">
+            <div className="text-center">
+              <h3 className="text-xl font-semibold text-foreground mb-4">
+                Add to Calendar
+              </h3>
               <CalendarButtons
-                title={`${university.name} Regular Decision`}
-                date={university.notificationRegular || ""}
-                time={university.time || ""}
+                title={`${university.name} Early Application`}
+                date={university.applicationEarly || ""}
+                time="19:00"
                 className="w-full"
               />
             </div>

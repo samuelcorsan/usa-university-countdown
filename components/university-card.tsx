@@ -20,19 +20,138 @@ interface UniversityCardProps {
 
 export function UniversityCard({ university, onSelect }: UniversityCardProps) {
   const now = new Date();
-  const today = `${now.getDate().toString().padStart(2, "0")}-${(
-    now.getMonth() + 1
-  )
+  const today = `${(now.getMonth() + 1).toString().padStart(2, "0")}-${now
+    .getDate()
     .toString()
     .padStart(2, "0")}-${now.getFullYear().toString().slice(-2)}`;
 
   const isToday =
-    university.notificationRegular === today ||
-    (university.showEarly && university.notificationEarly === today);
+    university.applicationRegular === today ||
+    (university.showEarly && university.applicationEarly === today);
 
   const defaultTime = "19:00:00";
-  const [dayRegular, monthRegular, yearRegular] =
-    university.notificationRegular.split("-");
+
+  if (!university.applicationRegular) {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="w-full">
+              <button
+                className="relative flex flex-col items-center justify-center p-4 rounded-xl border transition-all duration-200 w-full h-36 border-dashed border-muted-foreground/30 bg-muted/20 cursor-not-allowed"
+                disabled
+              >
+                <div className="flex flex-col items-center space-y-3">
+                  <Avatar className="h-12 w-12 ring-2 ring-background shadow-sm">
+                    <Image
+                      src={
+                        university.fileExists
+                          ? `/logos/${university.domain}.jpg`
+                          : `https://logo.clearbit.com/${university.domain}`
+                      }
+                      alt={`${university.name} logo`}
+                      width={48}
+                      height={48}
+                      className={cn("rounded-full object-cover w-full h-full")}
+                      loading="lazy"
+                    />
+                    <AvatarFallback className="text-sm font-semibold">
+                      {university.name
+                        .split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <div className="text-center w-full">
+                    <span className="text-sm font-medium leading-tight block">
+                      {university.name}
+                    </span>
+                    <span className="block text-muted-foreground text-xs mt-1">
+                      ⚠️ Dates not confirmed
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              Application deadline dates have not been confirmed for this
+              university yet.
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
+
+  const [monthRegular, dayRegular, yearRegular] =
+    university.applicationRegular.split("-");
+
+  if (
+    !monthRegular ||
+    !dayRegular ||
+    !yearRegular ||
+    isNaN(parseInt(monthRegular)) ||
+    isNaN(parseInt(dayRegular)) ||
+    isNaN(parseInt(yearRegular))
+  ) {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="w-full">
+              <button
+                className="relative flex flex-col items-center justify-center p-4 rounded-xl border transition-all duration-200 w-full h-36 border-dashed border-muted-foreground/30 bg-muted/20 cursor-not-allowed"
+                disabled
+              >
+                <div className="flex flex-col items-center space-y-3">
+                  <Avatar className="h-12 w-12 ring-2 ring-background shadow-sm">
+                    <Image
+                      src={
+                        university.fileExists
+                          ? `/logos/${university.domain}.jpg`
+                          : `https://logo.clearbit.com/${university.domain}`
+                      }
+                      alt={`${university.name} logo`}
+                      width={48}
+                      height={48}
+                      className={cn("rounded-full object-cover w-full h-full")}
+                      loading="lazy"
+                    />
+                    <AvatarFallback className="text-sm font-semibold">
+                      {university.name
+                        .split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </AvatarFallback>
+                  </Avatar>
+
+                  <div className="text-center w-full">
+                    <span className="text-sm font-medium leading-tight block">
+                      {university.name}
+                    </span>
+                    <span className="block text-muted-foreground text-xs mt-1">
+                      ⚠️ Invalid date format
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>
+              Application deadline date format is invalid for this university.
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
+
   const targetDateRegular = new Date(
     `20${yearRegular}-${monthRegular}-${dayRegular}T${
       university.time || defaultTime
@@ -40,49 +159,54 @@ export function UniversityCard({ university, onSelect }: UniversityCardProps) {
   );
 
   let earlyDecisionPassed = false;
-  if (university.showEarly && university.notificationEarly) {
-    const [dayEarly, monthEarly, yearEarly] =
-      university.notificationEarly.split("-");
-    const targetDateEarly = new Date(
-      `20${yearEarly}-${monthEarly}-${dayEarly}T${
-        university.time || defaultTime
-      }-05:00`
-    );
-    earlyDecisionPassed = now > targetDateEarly;
+  if (university.showEarly && university.applicationEarly) {
+    const [monthEarly, dayEarly, yearEarly] =
+      university.applicationEarly.split("-");
+
+    if (
+      monthEarly &&
+      dayEarly &&
+      yearEarly &&
+      !isNaN(parseInt(monthEarly)) &&
+      !isNaN(parseInt(dayEarly)) &&
+      !isNaN(parseInt(yearEarly))
+    ) {
+      const targetDateEarly = new Date(
+        `20${yearEarly}-${monthEarly}-${dayEarly}T${
+          university.time || defaultTime
+        }-05:00`
+      );
+      earlyDecisionPassed = now > targetDateEarly;
+    }
   }
 
   const isPassed =
     now > targetDateRegular && (!university.showEarly || earlyDecisionPassed);
 
   const formatDate = (dateString: string) => {
-    const [day, month, year] = dateString.split("-");
-    const date = new Date(`20${year}-${month}-${day}`);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
+    try {
+      const [month, day, year] = dateString.split("-");
+      const date = new Date(`20${year}-${month}-${day}`);
+      if (isNaN(date.getTime())) {
+        return "Invalid date";
+      }
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    } catch (error) {
+      return "Invalid date";
+    }
   };
 
   const getTooltipText = () => {
-    if (university.showEarly && university.notificationEarly) {
-      const earlyDate = formatDate(university.notificationEarly);
-      const regularDate = formatDate(university.notificationRegular);
+    const regularDate = formatDate(university.applicationRegular);
 
-      if (earlyDecisionPassed) {
-        return `Early decision passed on ${earlyDate}. Regular decision on ${regularDate}`;
-      } else if (now > targetDateRegular) {
-        return `Regular decision passed on ${regularDate}. Early decision on ${earlyDate}`;
-      } else {
-        return `Early decision on ${earlyDate}. Regular decision on ${regularDate}`;
-      }
+    if (now > targetDateRegular) {
+      return `Application deadline passed on ${regularDate}`;
     } else {
-      const regularDate = formatDate(university.notificationRegular);
-      if (now > targetDateRegular) {
-        return `Decision date passed on ${regularDate}`;
-      } else {
-        return `Decision date: ${regularDate}`;
-      }
+      return `Application deadline: ${regularDate}`;
     }
   };
 
@@ -94,7 +218,7 @@ export function UniversityCard({ university, onSelect }: UniversityCardProps) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
-  const gradientAlpha = isPassed ? 0.06 : isToday ? 0.32 : 0.22;
+  const gradientAlpha = isPassed ? 0.06 : isToday ? 0.25 : 0.2;
   const inlineGradientStyle = university.gradient
     ? {
         backgroundImage: `linear-gradient(135deg, ${hexToRgba(

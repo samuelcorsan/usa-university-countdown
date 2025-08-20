@@ -75,7 +75,7 @@ export function UsaUniversityCountdown({
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="bg-background flex flex-col">
       {!showCountdown ? (
         <UniversitySelection
           onUniversitySelect={(universityName) => {
