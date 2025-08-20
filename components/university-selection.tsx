@@ -25,8 +25,10 @@ export function UniversitySelection({
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
 
-      if (scrollTop + windowHeight >= documentHeight - 100) {
+      if (scrollTop + windowHeight >= documentHeight - 50) {
         setShowScrollIndicator(false);
+      } else {
+        setShowScrollIndicator(true);
       }
     };
 
@@ -130,9 +132,9 @@ export function UniversitySelection({
         </div>
 
         {showScrollIndicator && (
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 md:hidden">
-            <div className="bg-background/90 backdrop-blur-sm border border-border rounded-full px-4 py-2 shadow-lg">
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+          <div className="fixed bottom-6 left-0 right-0 z-50 md:hidden px-6">
+            <div className="bg-background/90 backdrop-blur-sm border border-border rounded-full px-4 py-2 shadow-lg w-fit mx-auto">
+              <div className="flex items-center justify-between text-sm text-muted-foreground space-x-4">
                 <span>Scroll for more universities</span>
                 <span className="animate-bounce text-lg">↓</span>
               </div>
