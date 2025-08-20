@@ -32,18 +32,6 @@ export function UniversityCountdown({
   university,
   onBack,
 }: UniversityCountdownProps) {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  const [timeLeftRegular, setTimeLeftRegular] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
   const [timeLeftApplicationEarly, setTimeLeftApplicationEarly] = useState({
     days: 0,
     hours: 0,
@@ -89,7 +77,7 @@ export function UniversityCountdown({
         const differenceEarly = targetDateEarly.getTime() - now.getTime();
 
         if (differenceEarly > 0) {
-          setTimeLeft({
+          setTimeLeftApplicationEarly({
             days: Math.floor(differenceEarly / (1000 * 60 * 60 * 24)),
             hours: Math.floor((differenceEarly / (1000 * 60 * 60)) % 24),
             minutes: Math.floor((differenceEarly / 1000 / 60) % 60),
@@ -110,7 +98,7 @@ export function UniversityCountdown({
       if (differenceRegular > 0) {
         const timeLeft = calculateTimeLeft(targetDateRegular);
         if (timeLeft) {
-          setTimeLeftRegular(timeLeft);
+          setTimeLeftApplicationRegular(timeLeft);
         }
       }
 

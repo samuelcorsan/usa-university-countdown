@@ -195,7 +195,7 @@ export function UniversityCard({ university, onSelect }: UniversityCardProps) {
         day: "numeric",
         year: "numeric",
       });
-    } catch (error) {
+    } catch {
       return "Invalid date";
     }
   };
